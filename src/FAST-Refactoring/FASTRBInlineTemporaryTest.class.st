@@ -5,27 +5,25 @@ A RBInlineTemporaryTest is xxxxxxxxx.
 Class {
 	#name : #FASTRBInlineTemporaryTest,
 	#superclass : #FASTRBRefactoringTest,
-	#instVars : [
-		'inlineMethod'
-	],
 	#category : #'FAST-Refactoring-Tests-Core'
 }
 
 { #category : #tests }
 FASTRBInlineTemporaryTest >> testInlineTemporary [
 	| aNode refactoring |
-	self assert: (inlineMethod statementBlock statements first expression isNotNil).
-	aNode = inlineMethod statementBlock statements first expression.
-	refactoring := RBInlineTemporaryRefactoring 
+	aNode := inlineMethod statementBlock statements first expression.
+	refactoring := FASTRBInlineTemporaryRefactoring 
 		node: aNode
-		from: #inlineMethod
-		in: RBRefactoryTestDataApp.
+		from: inlineMethod
+		in: (model entities detect: [ :e | e name = #FASTRBRefactoryTestDataApp ]).
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #RBRefactoryTestDataApp) parseTreeFor: #inlineMethod) = (RBParser parseMethod: 'inlineMethod
+
+	self assert: false.
+	"self assert: ((refactoring model classNamed: #FASTRBRefactoryTestDataApp) parseTreeFor: #inlineMethod) = (RBParser parseMethod: 'inlineMethod
 										^self
 													foo;
 													inlineMethod;
-													bar')
+													bar')"
 ]
 
 { #category : #tests }

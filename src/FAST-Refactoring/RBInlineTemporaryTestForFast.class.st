@@ -9,30 +9,6 @@ Class {
 }
 
 { #category : #tests }
-RBInlineTemporaryTestForFast >> executeRefactoring: aRefactoring [ 
-	aRefactoring primitiveExecute.
-	RBParser parseExpression: aRefactoring storeString
-]
-
-{ #category : #tests }
-RBInlineTemporaryTestForFast >> getFastMethodFromModelByName: methodName [
-	^ (model allMethods detect: [ :method | method name = methodName ]) generateFAST; fastNamedBehaviouralEntity
-]
-
-{ #category : #tests }
-RBInlineTemporaryTestForFast >> setUp [
-	super setUpRB.
-	model := MooseModel new.
-	MoosePharoImporterTask new
-	importerClass: SmalltalkImporter;
-	model: model;
-	addClasses: (OrderedCollection with: MockFAST);
-	run.
-	
-	self setUpMethods.
-]
-
-{ #category : #tests }
 RBInlineTemporaryTestForFast >> setUpRB [
 	super setUpRB.
 	model := MooseModel new.

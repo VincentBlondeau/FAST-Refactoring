@@ -28,22 +28,13 @@ Class {
 	#name : #FASTRBInlineTemporaryRefactoring,
 	#superclass : #FASTRBMethodRefactoring,
 	#instVars : [
-		'sourceInterval',
-		'selector',
+		'method',
 		'sourceTree',
 		'assignmentNode',
 		'definingNode'
 	],
 	#category : #'FAST-Refactoring-Core-Refactorings'
 }
-
-{ #category : #'instance creation' }
-FASTRBInlineTemporaryRefactoring class >> inline: anInterval from: aSelector in: aClass [ 
-	^self new 
-		inline: anInterval
-		from: aSelector
-		in: aClass
-]
 
 { #category : #'instance creation' }
 FASTRBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval from: aSelector in: aClass [ 
@@ -55,10 +46,10 @@ FASTRBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval
 		yourself
 ]
 
-{ #category : #'*FAST-Refactoring' }
-FASTRBInlineTemporaryRefactoring class >> node: aNode from: aSelector in: aClass [ 
+{ #category : #'instance creation' }
+FASTRBInlineTemporaryRefactoring class >> node: aASTNode from: aSelector in: aClass [ 
 	^self new 
-		node: aNode
+		node: aASTNode
 		from: aSelector
 		in: aClass
 ]
@@ -71,48 +62,41 @@ FASTRBInlineTemporaryRefactoring >> compileMethod [
 { #category : #testing }
 FASTRBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
 	| searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := FASTRBParseTreeSearcher new.
 	searcher matches: assignmentNode variable name , ' := ``@object'
 		do: [:aNode :answer | answer + 1].
 	^(searcher executeTree: definingNode initialAnswer: 0) == 1
 ]
 
 { #category : #'initialize-release' }
-FASTRBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [ 
-	class := self classObjectFor: aClass.
-	selector := aSelector.
-	sourceInterval := anInterval
-]
-
-{ #category : #'*FAST-Refactoring' }
-FASTRBInlineTemporaryRefactoring >> node: anInterval from: aSelector in: aClass [ 
-	class := self classObjectFor: aClass.
-	selector := aSelector.
-	assignmentNode := anInterval
+FASTRBInlineTemporaryRefactoring >> node: anASTNode from: aMethodAST in: aFAMIXClass [ 
+	class := aFAMIXClass.
+	method := aMethodAST."ie FASTNamedBehaviouralEntity"
+	assignmentNode := anASTNode
 ]
 
 { #category : #preconditions }
 FASTRBInlineTemporaryRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class) 
-		& (RBCondition withBlock: 
-					[self verifySelectedInterval.
+	^(FASTRBCondition definesMethod: method in: class) 
+		& (FASTRBCondition withBlock: 
+					[self verifySelectedNode.
 					true])
 ]
 
 { #category : #transforming }
 FASTRBInlineTemporaryRefactoring >> replaceAssignment [
-	assignmentNode parent isSequence 
-		ifTrue: [assignmentNode parent removeNode: assignmentNode]
+	assignmentNode parentNode isSequence 
+		ifTrue: [assignmentNode parentNode removeNode: assignmentNode]
 		ifFalse: [assignmentNode replaceWith: assignmentNode value]
 ]
 
 { #category : #transforming }
 FASTRBInlineTemporaryRefactoring >> replaceReferences [
 	| rewriter |
-	rewriter := RBParseTreeRewriter new.
+	rewriter := FASTRBParseTreeRewriter new.
 	rewriter replaceTree: assignmentNode variable
 		withTree: assignmentNode value.
-	definingNode removeTemporaryNamed: assignmentNode variable name.
+	method removeTemporaryNamed: assignmentNode variable name.
 	rewriter executeTree: definingNode
 ]
 
@@ -139,20 +123,18 @@ FASTRBInlineTemporaryRefactoring >> transform [
 ]
 
 { #category : #preconditions }
-FASTRBInlineTemporaryRefactoring >> verifySelectedInterval [
-	sourceTree := class parseTreeFor: selector.
+FASTRBInlineTemporaryRefactoring >> verifySelectedNode [
+	self flag: 'Simplified ... No verifications !'.
+	sourceTree := method.
 	sourceTree isNil ifTrue: [self refactoringFailure: 'Could not parse source'].
-	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
-	assignmentNode isAssignment 
-		ifFalse: 
-			[self refactoringFailure: 'The selected node is not an assignment statement'].
-	definingNode := assignmentNode whoDefines: assignmentNode variable name.
-	self hasOnlyOneAssignment 
+	"definingNode := assignmentNode whoDefines: assignmentNode variable name."
+	definingNode := method.
+	"self hasOnlyOneAssignment 
 		ifFalse: 
 			[self refactoringError: 'There are multiple assignments to the variable'].
 	(RBReadBeforeWrittenTester isVariable: assignmentNode variable name
 		writtenBeforeReadIn: definingNode) 
 			ifFalse: 
 				[self 
-					refactoringError: 'The variable is possible read before it is assigned']
+					refactoringError: 'The variable is possible read before it is assigned']"
 ]

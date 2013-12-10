@@ -5,16 +5,6 @@ Class {
 }
 
 { #category : #tests }
-MockFAST >> inlineMethod [
-	| temp |
-	temp := self
-				foo;
-				inlineMethod;
-				bar.
-	^temp
-]
-
-{ #category : #tests }
 MockFAST >> sourceText [
 	^ 'inlineMethod
 	| temp |

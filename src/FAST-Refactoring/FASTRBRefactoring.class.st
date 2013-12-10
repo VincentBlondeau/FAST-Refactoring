@@ -88,12 +88,14 @@ FASTRBRefactoring class >> setDefaultOption: aSymbol to: aBlock [
 
 { #category : #utilities }
 FASTRBRefactoring >> associationForClassVariable: aName in: aClass ifAbsent: aBlock [ 
+	self notify: 'In Refactoring-*'.
 	^aClass realClass classPool associationAt: aName asSymbol
 		ifAbsent: [aClass realClass classPool associationAt: aName asString ifAbsent: aBlock]
 ]
 
 { #category : #testing }
 FASTRBRefactoring >> canReferenceVariable: aString in: aClass [ 
+	self notify: 'In Refactoring-*'.
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString
@@ -101,12 +103,14 @@ FASTRBRefactoring >> canReferenceVariable: aString in: aClass [
 
 { #category : #accessing }
 FASTRBRefactoring >> changes [
+	self notify: 'In Refactoring-*'.
 	^self model changes
 ]
 
 { #category : #support }
 FASTRBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [ 
 	| parseTree |
+		self notify: 'In Refactoring-*'.
 	parseTree := aRBClass parseTreeFor: aSelector.
 	parseTree notNil ifTrue: [aMatcher executeTree: parseTree].
 	^aMatcher answer
@@ -114,11 +118,13 @@ FASTRBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 
 { #category : #utilities }
 FASTRBRefactoring >> checkInstanceVariableName: aName in: aClass [ 
+	self notify: 'In Refactoring-*'.
 	^RBCondition checkInstanceVariableName: aName in: aClass
 ]
 
 { #category : #utilities }
 FASTRBRefactoring >> checkMethodName: aName in: aClass [ 
+	self notify: 'In Refactoring-*'.
 	^RBCondition checkMethodName: aName in: aClass
 ]
 
@@ -136,6 +142,7 @@ FASTRBRefactoring >> checkPreconditions [
 
 { #category : #private }
 FASTRBRefactoring >> classObjectFor: anObject [ 
+	self notify: 'In Refactoring-*'.
 	(anObject isBehavior or: [anObject isTrait]) ifTrue: [^self model classFor: anObject].
 	anObject isSymbol ifTrue: [^self model classNamed: anObject].
 	^anObject
@@ -143,6 +150,7 @@ FASTRBRefactoring >> classObjectFor: anObject [
 
 { #category : #support }
 FASTRBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [ 
+	self notify: 'In Refactoring-*'.
 	self model allReferencesTo: aSymbol
 		do: 
 			[:method | 
@@ -154,6 +162,7 @@ FASTRBRefactoring >> convertAllReferencesTo: aSymbol using: searchReplacer [
 
 { #category : #support }
 FASTRBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [ 
+	self notify: 'In Refactoring-*'.
 	self model allReferencesToClass: aRBClass
 		do: 
 			[:method | 
@@ -165,6 +174,7 @@ FASTRBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer
 
 { #category : #support }
 FASTRBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [ 
+	self notify: 'In Refactoring-*'.
 	classSet do: 
 			[:aClass | 
 			(aBlock value: aClass) do: 
@@ -181,6 +191,7 @@ FASTRBRefactoring >> convertMethod: selector for: aClass using: searchReplacer [
 	change is made then compile it into the changeBuilder."
 
 	| parseTree |
+		self notify: 'In Refactoring-*'.
 	parseTree := aClass parseTreeFor: selector.
 	parseTree isNil ifTrue: [^self].
 	(searchReplacer executeTree: parseTree) 
@@ -190,6 +201,7 @@ FASTRBRefactoring >> convertMethod: selector for: aClass using: searchReplacer [
 { #category : #accessing }
 FASTRBRefactoring >> copyOptionsFrom: aDictionary [ 
 	| dict |
+		self notify: 'In Refactoring-*'.
 	dict := self options.
 	dict == self class refactoringOptions 
 		ifTrue: [^self options: aDictionary copy].
@@ -202,11 +214,13 @@ FASTRBRefactoring >> copyOptionsFrom: aDictionary [
 
 { #category : #transforming }
 FASTRBRefactoring >> defaultEnvironment [
+	self notify: 'In Refactoring-*'.
 	^RBBrowserEnvironment new
 ]
 
 { #category : #transforming }
 FASTRBRefactoring >> execute [
+	self notify: 'In Refactoring-*'.
 	self primitiveExecute.
 	RBRefactoringManager instance addRefactoring: self
 ]
@@ -423,6 +437,7 @@ FASTRBRefactoring >> uniqueMethodNameFor: anInteger [
 { #category : #utilities }
 FASTRBRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [ 
 	| matcher block |
+		self notify: 'In Refactoring-*'.
 	matcher := RBParseTreeSearcher new.
 	block := 
 			[:aNode :answer | 

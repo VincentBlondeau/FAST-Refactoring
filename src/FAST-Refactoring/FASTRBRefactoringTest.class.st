@@ -20,9 +20,8 @@ Class {
 	#name : #FASTRBRefactoringTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'manager',
-		'changeSet',
-		'model'
+		'model',
+		'inlineMethod'
 	],
 	#category : #'FAST-Refactoring-Tests-Core'
 }
@@ -154,6 +153,18 @@ FASTRBRefactoringTest >> childrenToSiblingTestData [
 		each last do: [:meth | class compile: meth first classified: meth last]].
 m
 '
+]
+
+{ #category : #tests }
+FASTRBRefactoringTest >> executeRefactoring: aRefactoring [ 
+	aRefactoring primitiveExecute.
+	self notify: 'TODO'.
+	"RBParser parseExpression: aRefactoring storeString"
+]
+
+{ #category : #tests }
+FASTRBRefactoringTest >> getFastMethodFromModelByName: methodName [
+	^ (model allMethods detect: [ :method | method name = methodName ]) generateFAST; fastNamedBehaviouralEntity
 ]
 
 { #category : #private }
@@ -366,31 +377,22 @@ m
 '
 ]
 
-{ #category : #'set up' }
+{ #category : #tests }
 FASTRBRefactoringTest >> setUp [
-	| assoc |
-	super setUpRB.
-	assoc := RBRefactoringManager classPool associationAt: #Instance
-				ifAbsent: [RBRefactoringManager classPool associationAt: 'Instance'].
-	manager := assoc value.
-	assoc value: nil.
-	model := RBNamespace new
+	super setUp.
+	model := MooseModel new.
+	MoosePharoImporterTask new
+	importerClass: SmalltalkImporter;
+	model: model;
+	addClasses: (OrderedCollection with: FASTRBRefactoryTestDataApp);
+	run.
+	
+	self setUpMethods.
 ]
 
 { #category : #tests }
 FASTRBRefactoringTest >> setUpMethods [
 	inlineMethod := self getFastMethodFromModelByName:'inlineMethod'
-]
-
-{ #category : #'set up' }
-FASTRBRefactoringTest >> setUpRB [
-	| assoc |
-	super setUpRB.
-	assoc := RBRefactoringManager classPool associationAt: #Instance
-				ifAbsent: [RBRefactoringManager classPool associationAt: 'Instance'].
-	manager := assoc value.
-	assoc value: nil.
-	model := RBNamespace new
 ]
 
 { #category : #'set up' }
@@ -478,10 +480,7 @@ FASTRBRefactoringTest >> shouldWarn: aRefactoring [
 { #category : #'set up' }
 FASTRBRefactoringTest >> tearDown [
 	super tearDown.
-	RBRefactoringManager instance release.
-	(RBRefactoringManager classPool associationAt: #Instance
-		ifAbsent: [RBRefactoringManager classPool associationAt: 'Instance']) 
-			value: manager
+
 ]
 
 { #category : #tests }
