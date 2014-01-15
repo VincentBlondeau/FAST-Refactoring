@@ -4,3 +4,8 @@ Extension { #name : #FASTReturnStatement }
 FASTReturnStatement >> childrenNodes [
 	^ expression
 ]
+
+{ #category : #'*FAST-Refactoring-Core' }
+FASTReturnStatement >> mooseNameOn: aStream [
+	aStream nextPutAll: self name
+]
