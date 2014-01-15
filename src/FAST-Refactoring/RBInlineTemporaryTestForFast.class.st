@@ -5,7 +5,7 @@ Class {
 		'model',
 		'inlineMethod'
 	],
-	#category : #'FAST-Refactoring-Temp'
+	#category : #'FAST-Refactoring-RBTemp'
 }
 
 { #category : #tests }

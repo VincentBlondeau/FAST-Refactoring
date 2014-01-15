@@ -1,7 +1,7 @@
 Class {
 	#name : #MockFAST,
 	#superclass : #TestCase,
-	#category : #'FAST-Refactoring-Temp'
+	#category : #'FAST-Refactoring-RBTemp'
 }
 
 { #category : #tests }

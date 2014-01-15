@@ -24,7 +24,7 @@ Class {
 		'type',
 		'errorBlock'
 	],
-	#category : #'FAST-Refactoring-Core-Conditions'
+	#category : #'FAST-Refactoring-RBCore-Conditions'
 }
 
 { #category : #'instance creation' }

@@ -23,7 +23,7 @@ Class {
 		'model',
 		'inlineMethod'
 	],
-	#category : #'FAST-Refactoring-Tests-Core'
+	#category : #'FAST-Refactoring-RBTests-Core'
 }
 
 { #category : #private }

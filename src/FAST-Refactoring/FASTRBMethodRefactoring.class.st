@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'class'
 	],
-	#category : #'FAST-Refactoring-Core-Refactorings'
+	#category : #'FAST-Refactoring-RBCore-Refactorings'
 }
 
 { #category : #private }

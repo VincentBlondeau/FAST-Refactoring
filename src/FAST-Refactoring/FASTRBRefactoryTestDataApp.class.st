@@ -1,7 +1,7 @@
 Class {
 	#name : #FASTRBRefactoryTestDataApp,
 	#superclass : #Object,
-	#category : #'FAST-Refactoring-Tests-Data'
+	#category : #'FAST-Refactoring-RBTests-Data'
 }
 
 { #category : #tests }

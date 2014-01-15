@@ -24,7 +24,7 @@ Class {
 		'right',
 		'failed'
 	],
-	#category : #'FAST-Refactoring-Core-Conditions'
+	#category : #'FAST-Refactoring-RBCore-Conditions'
 }
 
 { #category : #checking }

@@ -5,7 +5,7 @@ A RBInlineTemporaryTest is xxxxxxxxx.
 Class {
 	#name : #FASTRBInlineTemporaryTest,
 	#superclass : #FASTRBRefactoringTest,
-	#category : #'FAST-Refactoring-Tests-Core'
+	#category : #'FAST-Refactoring-RBTests-Core'
 }
 
 { #category : #tests }

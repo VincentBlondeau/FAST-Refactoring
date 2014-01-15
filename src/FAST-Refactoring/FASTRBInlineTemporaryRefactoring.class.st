@@ -33,7 +33,7 @@ Class {
 		'assignmentNode',
 		'definingNode'
 	],
-	#category : #'FAST-Refactoring-Core-Refactorings'
+	#category : #'FAST-Refactoring-RBCore-Refactorings'
 }
 
 { #category : #'instance creation' }

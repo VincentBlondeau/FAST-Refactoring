@@ -22,7 +22,7 @@ Class {
 	#classVars : [
 		'RefactoringOptions'
 	],
-	#category : #'FAST-Refactoring-Core-Refactorings'
+	#category : #'FAST-Refactoring-RBCore-Refactorings'
 }
 
 { #category : #'as yet unclassified' }
