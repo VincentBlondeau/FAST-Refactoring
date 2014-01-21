@@ -14,18 +14,28 @@ FASTERSearchTest >> setUp [
 ]
 
 { #category : #tests }
+FASTERSearchTest >> testIfTrueBlockJavaTransformation [
+	| ifTrueCollection |
+	ifTrueCollection := fastSearch find: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue:].
+	ifTrueCollection --> #transformIfTrueBlock.
+	self assert: ifTrueCollection isCollection.
+	self assert: ifTrueCollection isNotEmpty.
+	self assert: (ifTrueCollection inject: true into: [ :bool :each | bool and: each selector name = #ifTrue: ]).
+]
+
+{ #category : #tests }
 FASTERSearchTest >> testIfTrueBlockSearch [
 	| result |
 	result := fastSearch find: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue:].
 	self assert: result isCollection.
-	self assert: result isNotNil.
+	self assert: result isNotEmpty.
 	self assert: (result inject: true into: [ :bool :each | bool and: each selector name = #ifTrue: ])
 ]
 
 { #category : #tests }
 FASTERSearchTest >> testTrueIfTrueBlockSearch [
 	| result |
-	result := fastSearch find: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue: and: [a concreteReceiver isFASTBooleanLiteral and: [ a concreteReceiver value = true]]].
+	result := fastSearch find: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue: and: [ (a concreteReceiver is: FASTBooleanLiteral) and: [ a concreteReceiver value = true]]].
 	self assert: result isCollection.
 	self assert: (result inject: true into: [ :bool :each | bool and: each selector name = #ifTrue: ])
 ]

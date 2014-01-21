@@ -1,6 +1,9 @@
 Class {
 	#name : #FASTERTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'model'
+	],
 	#category : #'FAST-Refactoring-Tests-Core'
 }
 
@@ -11,12 +14,30 @@ FASTERTest >> generateFASTOnModel: aModel [
 	
 ]
 
+{ #category : #running }
+FASTERTest >> importModel [
+	MoosePharoImporterTask new
+		importerClass: SmalltalkImporter;
+		model: model;
+		addFromPackageNamed: #'FAST-Refactoring-Tests-Data';
+		run.
+]
+
 { #category : #accessing }
 FASTERTest >> model [
-	^(MooseModel root at: 1)
+	^ model
+	
+]
+
+{ #category : #accessing }
+FASTERTest >> model: aModel [
+	model := aModel
+	
 ]
 
 { #category : #running }
 FASTERTest >> setUp [
+	self model: MooseModel new.
+	self importModel.
 	self generateFASTOnModel: self model.
 ]

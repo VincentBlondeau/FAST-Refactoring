@@ -38,14 +38,15 @@ Class {
 	#name : #FASTERSearch,
 	#superclass : #Object,
 	#instVars : [
-		'model'
+		'model',
+		'this'
 	],
 	#category : #'FAST-Refactoring-Core'
 }
 
 { #category : #searching }
-FASTERSearch >> find: aClass where: aBlock [
-	^(self model allMethods deepCollect: [ :each | each childrenNodes]) select: [ :element | element class = aClass and: [ aBlock value: element ] ]
+FASTERSearch >> find: aSearchedClass where: aBlock [
+	^(self model allMethods deepCollect: [ :each | each childrenNodes]) select: [ :element | element class = aSearchedClass and: [ aBlock value: element ] ]
 	
 ]
 
@@ -57,4 +58,14 @@ FASTERSearch >> model [
 { #category : #accessing }
 FASTERSearch >> model: anObject [
 	model := anObject
+]
+
+{ #category : #accessing }
+FASTERSearch >> this [
+	^ this
+]
+
+{ #category : #accessing }
+FASTERSearch >> this: anObject [
+	this := anObject
 ]
