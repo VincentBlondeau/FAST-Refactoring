@@ -4,3 +4,8 @@ Extension { #name : #FASTStatementBlock }
 FASTStatementBlock >> childrenNodes [
 	^ statements
 ]
+
+{ #category : #'*FAST-Refactoring-Extensions' }
+FASTStatementBlock >> mooseNameOn: aStream [
+	aStream nextPutAll: self name.
+]

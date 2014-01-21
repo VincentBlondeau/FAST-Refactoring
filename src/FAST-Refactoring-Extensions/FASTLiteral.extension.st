@@ -5,3 +5,10 @@ FASTLiteral >> childrenNodes [
 	self flag: 'Send nil for the moment'.
 	^ nil
 ]
+
+{ #category : #'*FAST-Refactoring-Extensions' }
+FASTLiteral >> mooseNameOn: aStream [
+	aStream nextPutAll: self value.
+	aStream nextPutAll: Character space.
+	aStream nextPutAll: self name.
+]
