@@ -2,7 +2,7 @@ Extension { #name : #FASTReturnStatement }
 
 { #category : #'*FAST-Refactoring-Extensions' }
 FASTReturnStatement >> childrenNodes [
-	^ expression
+	^ { expression } asOrderedCollection 
 ]
 
 { #category : #'*FAST-Refactoring-Extensions' }

@@ -2,5 +2,5 @@ Extension { #name : #FAMIXBehaviouralEntity }
 
 { #category : #'*FAST-Refactoring-Extensions' }
 FAMIXBehaviouralEntity >> childrenNodes [
-	^ self fastNamedBehaviouralEntity
+	^ { self fastNamedBehaviouralEntity } asOrderedCollection 
 ]

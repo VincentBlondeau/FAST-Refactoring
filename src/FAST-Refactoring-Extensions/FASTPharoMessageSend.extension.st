@@ -3,7 +3,7 @@ Extension { #name : #FASTPharoMessageSend }
 { #category : #'*FAST-Refactoring-Extensions' }
 FASTPharoMessageSend >> childrenNodes [
 	self flag: 'Should we add invocation ?'.
-	{ arguments . concreteReceiver } asOrderedCollection  
+	^ { concreteReceiver . selector } asOrderedCollection union: arguments
 ]
 
 { #category : #'*FAST-Refactoring-Extensions' }

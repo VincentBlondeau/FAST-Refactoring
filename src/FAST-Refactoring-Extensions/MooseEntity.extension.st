@@ -4,3 +4,8 @@ Extension { #name : #MooseEntity }
 MooseEntity >> childrenNodes [
 	^self children
 ]
+
+{ #category : #'*FAST-Refactoring-Extensions' }
+MooseEntity >> parentNode [
+	^ self belongsTo
+]
