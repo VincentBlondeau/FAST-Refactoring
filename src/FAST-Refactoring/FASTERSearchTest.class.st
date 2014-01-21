@@ -14,16 +14,6 @@ FASTERSearchTest >> setUp [
 ]
 
 { #category : #tests }
-FASTERSearchTest >> testIfTrueBlockJavaTransformation [
-	| ifTrueCollection |
-	ifTrueCollection := fastSearch find: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue:].
-	ifTrueCollection --> #transformIfTrueBlock.
-	self assert: ifTrueCollection isCollection.
-	self assert: ifTrueCollection isNotEmpty.
-	self assert: (ifTrueCollection inject: true into: [ :bool :each | bool and: each selector name = #ifTrue: ]).
-]
-
-{ #category : #tests }
 FASTERSearchTest >> testIfTrueBlockSearch [
 	| result |
 	result := fastSearch find: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue:].
