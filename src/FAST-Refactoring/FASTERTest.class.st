@@ -23,6 +23,11 @@ FASTERTest >> importModel [
 		run.
 ]
 
+{ #category : #tests }
+FASTERTest >> methodNamed: aMethodName [
+	^ self model allMethods detect: [ :m | m name = aMethodName ]
+]
+
 { #category : #accessing }
 FASTERTest >> model [
 	^ model

@@ -39,15 +39,33 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'model',
-		'this'
+		'this',
+		'transformationClass',
+		'scope'
 	],
 	#category : #'FAST-Refactoring-Core'
 }
 
+{ #category : #public }
+FASTERSearch >> apply [
+	| methodName |
+	methodName := 'transform', this class asString.
+	self perform: methodName asSymbol
+]
+
+{ #category : #searching }
+FASTERSearch >> find: aSearchedClass [
+	^ self find: aSearchedClass where: [ :e | true ]
+]
+
 { #category : #searching }
 FASTERSearch >> find: aSearchedClass where: aBlock [
-	^(self model allMethods deepCollect: [ :each | each childrenNodes]) select: [ :element | element class = aSearchedClass and: [ aBlock value: element ] ]
-	
+	^ self findAll select: [ :element | element class = aSearchedClass and: [ aBlock value: element ] ]	"asFASTERCollection"
+]
+
+{ #category : #searching }
+FASTERSearch >> findAll [
+	^ self scope deepCollect: [ :each | each childrenNodes ]
 ]
 
 { #category : #accessing }
@@ -61,6 +79,16 @@ FASTERSearch >> model: anObject [
 ]
 
 { #category : #accessing }
+FASTERSearch >> scope [ 
+	^ scope ifNil: [ self model allMethods ]
+]
+
+{ #category : #accessing }
+FASTERSearch >> scope: aScope [
+	scope := aScope
+]
+
+{ #category : #accessing }
 FASTERSearch >> this [
 	^ this
 ]
@@ -68,4 +96,14 @@ FASTERSearch >> this [
 { #category : #accessing }
 FASTERSearch >> this: anObject [
 	this := anObject
+]
+
+{ #category : #accessing }
+FASTERSearch >> transformationClass [
+	^ transformationClass
+]
+
+{ #category : #accessing }
+FASTERSearch >> transformationClass: anObject [
+	transformationClass := anObject
 ]

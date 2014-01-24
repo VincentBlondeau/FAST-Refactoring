@@ -10,7 +10,10 @@ Class {
 { #category : #running }
 FASTERSearchTest >> setUp [
 	super setUp.
-	fastSearch := FASTERSearch new model: self model; yourself.
+	fastSearch := FASTERSearch new 
+		model: self model; 
+		transformationClass: #FASTERTransformIfBlockInJava;
+		yourself.
 ]
 
 { #category : #tests }

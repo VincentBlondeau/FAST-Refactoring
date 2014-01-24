@@ -7,19 +7,30 @@ Class {
 { #category : #'as yet unclassified' }
 FASTERTransformIfBlockInJava >> transformFASTExpression [
 	self flag: 'To implement'.
-	"self shouldBeImplemented "
+	^ this
+]
+
+{ #category : #'as yet unclassified' }
+FASTERTransformIfBlockInJava >> transformFASTPharoMessageSend [
+	| ifJavaBlock fastStatementBlock |
+	ifJavaBlock := FASTJavaIfStatement new.
+	this parentNode parentNode add: ifJavaBlock in: #statements; remove: this parentNode in: #statements.
+	ifJavaBlock parentNode: this parentNode parentNode.
+	ifJavaBlock condition: (this concreteReceiver" --> #FASTERTransformIfBlockInJava").
+	ifJavaBlock condition parentNode: ifJavaBlock.
+	fastStatementBlock := FASTStatementBlock new statements: this arguments first block statements.
+	ifJavaBlock thenBody: (fastStatementBlock"--> #FASTERTransformIfBlockInJava").
+	ifJavaBlock thenBody parentNode: ifJavaBlock.
 ]
 
 { #category : #'as yet unclassified' }
 FASTERTransformIfBlockInJava >> transformFASTStatementBlock [
-	"self shouldBeImplemented"
+	self flag: 'To implement'.
+	^ this
 ]
 
 { #category : #'as yet unclassified' }
-FASTERTransformIfBlockInJava >> transformIfTrueBlock [
-	| ifJavaBlock |
-	ifJavaBlock := FASTJavaIfStatement new.
-	this parentNode parentNode add: ifJavaBlock in: #statements; remove: this parentNode in: #statements.
-	ifJavaBlock condition: (this concreteReceiver --> #transformFASTExpression).
-	ifJavaBlock thenBody: (this arguments first block --> #transformFASTStatementBlock).
+FASTERTransformIfBlockInJava >> transformFASTVariableExpression [
+	self flag: 'To implement'.
+	^ this
 ]
