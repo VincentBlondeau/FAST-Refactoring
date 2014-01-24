@@ -18,8 +18,15 @@ FASTERDisplay class >> display: aFASTEntity [
 
 { #category : #display }
 FASTERDisplay >> display [
-	| view |
+	| view labelNode  |
 	view := ROMondrianViewBuilder new.
+	view title: 'FAST Representation'.
+	view interaction 
+		on: ROMouseClick do:  [ :event |  
+			ROFocusView on: event element ].
+	view interaction 
+		item: 'inspect element' action: #inspect;
+		item: 'browse element class' action: [ :el | el browse ].
 	view shape rectangle size: 40; 
 		withCenteredText.
 "		fillColor: (RONIdentityNormalizer new command: [ :e | e class name hash])."
@@ -28,6 +35,12 @@ FASTERDisplay >> display [
 	view edgesFrom: #parentNode.
 	view interaction action: #inspect.
 	view treeLayout.
+	
+	view shape label centeredLabel.
+	labelNode := view node: 'Hello'.
+	"ROConstraint stick: labelNode between: view edges first from and: view edges first to."
+	
+	"ROConstraint stick: labelNode onTheCenterOf: view edges second."
 	view open
 ]
 
