@@ -37,3 +37,13 @@ FASTRefactoringTestData >> trueIfTrueMethod [
 				bar
 	].
 ]
+
+{ #category : #tests }
+FASTRefactoringTestData >> trueIfTrueNestedMethod [
+	true ifTrue: [ self
+				foo ;
+				inlineMethod;
+				bar.
+				true ifTrue: [ self ]
+	].
+]
