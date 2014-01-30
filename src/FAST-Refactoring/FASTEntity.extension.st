@@ -6,21 +6,27 @@ FASTEntity >> --> aTransformationMethodName [
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> add: anObject in: anInstanceVarCollection [
-	| var |
-	var := self instanceVariableNamed: anInstanceVarCollection.
-	anObject isCollection 
-		ifTrue: [ var addAll: anObject ]
-		ifFalse: [ var add: anObject ]. 
+FASTEntity >> add: anObject in: anAccessorReturningACollection [
+	| collection |
+	collection := self collectionFromAccessorNamed: anAccessorReturningACollection.
+	anObject isCollection
+		ifTrue: [ collection addAll: anObject ]
+		ifFalse: [ collection add: anObject ].
+	self updateOpposite: anAccessorReturningACollection
+]
+
+{ #category : #'*FAST-Refactoring-Core' }
+FASTEntity >> checkIsPerfomableSelector: anAccessor [
+	(self class canPerform: anAccessor) ifFalse: 
+		[ NotFound signal: anAccessor asString, ' in ', self class asString ].
 	
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> instanceVariableNamed: anInstanceVarName [
-	| index |
-	index := self class instVarIndexFor: anInstanceVarName.
-	(index = 0) ifTrue: [ NotFound signal ].
-	^ (self instVarAt: index)
+FASTEntity >> collectionFromAccessorNamed: anAccessorReturningACollection. [
+	self checkIsPerfomableSelector: anAccessorReturningACollection.
+	^self perform: anAccessorReturningACollection
+	
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
@@ -29,11 +35,29 @@ FASTEntity >> is: aClass [
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> remove: anObject in: anInstanceVarCollection [
-	| var |
-	var := self instanceVariableNamed: anInstanceVarCollection.
-	anObject isCollection 
-		ifTrue: [ var removeAll: anObject ]
-		ifFalse: [ var remove: anObject ]. 
-	
+FASTEntity >> isApplicableTransformation: aCompiledMethod [
+	| requiredClass |
+	requiredClass := (Pragma inMethod: aCompiledMethod named: #on:) arguments first.
+	^ self class name = requiredClass or: [self class subclasses includes: requiredClass ]
+
+]
+
+{ #category : #'*FAST-Refactoring-Core' }
+FASTEntity >> remove: anObject in: anAccessorReturningACollection [
+	| collection |
+	collection := self collectionFromAccessorNamed: anAccessorReturningACollection.
+	anObject isCollection
+		ifTrue: [ collection removeAll: anObject ]
+		ifFalse: [ collection remove: anObject ]
+]
+
+{ #category : #'*FAST-Refactoring-Core' }
+FASTEntity >> updateOpposite: aSelector [
+	| collection |
+	"check if the annotations for the metamodel are correctly set. So if the parents nodes are set"
+	self flag: 'rename'.
+	"Pragma inMethod: (self class lookupSelector:  aSelector asSymbol) named: #MSEProperty:type:opposite:."
+	collection := self perform: aSelector.
+	collection do: [ :e | e parentNode ifNil: [ "FASTERParentNodeNotSetWithFAMEAnnotations signal" ] ]
+
 ]

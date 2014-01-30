@@ -5,10 +5,11 @@ Class {
 		'method',
 		'entityToRemoveOne',
 		'entityToRemoveTwo',
-		'entityOne',
-		'entityTwo',
 		'entities',
-		'entitiesToRemove'
+		'entitiesToRemove',
+		'entityStatement',
+		'entityNamedVariable',
+		'entityStatementBlock'
 	],
 	#category : #'FAST-Refactoring-Tests-Extensions'
 }
@@ -16,9 +17,10 @@ Class {
 { #category : #tests }
 FASTERExtensionTest >> setUp [
 	super setUp.
-	entityOne := FASTNamedEntity new.
-	entityTwo := FASTStatementBlock new.
-	entities := { entityOne . entityTwo } asOrderedCollection.
+	entityNamedVariable := FASTNamedEntity new.
+	entityStatementBlock := FASTStatementBlock new.
+	entityStatement := FASTStatement new.
+	entities := { entityNamedVariable . entityStatementBlock } asOrderedCollection.
 	entityToRemoveOne := FASTNamedEntity new.
 	entityToRemoveTwo := FASTStatementBlock new.
 	entitiesToRemove := { entityToRemoveOne . entityToRemoveTwo } asOrderedCollection.
@@ -27,21 +29,37 @@ FASTERExtensionTest >> setUp [
 
 { #category : #tests }
 FASTERExtensionTest >> testAddInAnInexsistantVariableShouldRaiseANotFoundException [
-	self should: [method add: entityOne in: #variablesLocales] raise: NotFound.
+	self should: [method add: entityNamedVariable in: #variablesLocales] raise: NotFound.
+]
+
+{ #category : #tests }
+FASTERExtensionTest >> testAddInShouldAddAFASTEntityInMethodStatements [
+	method add: entityStatement in: #statements.
+	self assert: method statements size = 1.
+	self assert: method statements first == entityStatement.
+	self assert: entityStatement parentNode equals: method
+]
+
+{ #category : #tests }
+FASTERExtensionTest >> testAddInShouldAddAFASTEntityInStatements [
+	entityStatementBlock add: entityStatement in: #statements.
+	self assert: entityStatementBlock statements size = 1.
+	self assert: entityStatementBlock statements first == entityStatement.
+	self assert: entityStatement parentNode equals: entityStatementBlock
 ]
 
 { #category : #tests }
 FASTERExtensionTest >> testAddInShouldAddAFASTEntityInTheLocalVariableInstanceVariable [
-	method add: entityOne in: #localVariables.
+	method add: entityNamedVariable in: #localVariables.
 	self assert: method localVariables size = 1.
-	self assert: method localVariables first == entityOne.
+	self assert: method localVariables first == entityNamedVariable.
 ]
 
 { #category : #tests }
 FASTERExtensionTest >> testAddInShouldAddTwoFASTEntitiesInTheLocalVariableInstanceVariable [
 	method add: entities in: #localVariables.
 	self assert: method localVariables size = 2.
-	self assert: (method localVariables includes: entityOne).
+	self assert: (method localVariables includes: entityNamedVariable).
 ]
 
 { #category : #tests }
@@ -51,14 +69,14 @@ FASTERExtensionTest >> testRemoveInAnInexsistantVariableShouldRaiseANotFoundExce
 
 { #category : #tests }
 FASTERExtensionTest >> testRemoveInCollectionWhichDoesntContainTheVariableShouldRaiseANotFoundException [
-	self should: [method remove: entityOne in: #localVariables] raise: NotFound.
+	self should: [method remove: entityNamedVariable in: #localVariables] raise: NotFound.
 ]
 
 { #category : #tests }
 FASTERExtensionTest >> testRemoveInShouldRemoveTheFASTEntityInTheLocalVariableInstanceVariable [
 	method localVariables addAll: entities.
-	method remove: entityOne in: #localVariables.
-	self assert: (method localVariables includes: entityTwo).
+	method remove: entityNamedVariable in: #localVariables.
+	self assert: (method localVariables includes: entityStatementBlock).
 ]
 
 { #category : #tests }

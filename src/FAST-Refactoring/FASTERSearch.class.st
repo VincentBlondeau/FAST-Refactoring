@@ -1,11 +1,33 @@
 "
-A FASTERSearch is xxxxxxxxx.
+A FASTERSearch is a abstract class allowing some search and transformation in a MooseModel.
+Obviously, before any search, the FAST model should be already generated.
+
+For applying a transformation, send the message --> to the root element with the symbol of the transformation class as parameter.
+
+To be recognize as a transformation, the method in the transformation class as to wear the pragma : <transform> and should say on which kind of MooseClass she can understand by the pragma : <on: #FASTExpression> for example.
+
+To add or remove some objects from a collection, you can use the methods :
+add: in: -> adds an Object in a  IV (use the selector associated to the IV)
+remove: in: -> removes an Object
+
 
 Instance Variables
-	model:		<Object>
+	model:				a MooseModel 
+	this: 				a FASTEntity 
+	transformationClass : a Class
+	scope: 				a MooseEntity
+	
 
 model
-	- xxxxx
+	-  the Moose Model where the search or the transformation should be applied
+scope
+	- the entity we search into to find the elements
+this - read only
+	-  object containing the Moose object where you can do the transformation
+transformationClass - private
+	- the class where the transformation will be searched and executed
+
+
 
 
 | ""VI"" this ifPharoBlock ifJavaBlock statementsCollection localVariables |
@@ -46,24 +68,27 @@ Class {
 	#category : #'FAST-Refactoring-Core'
 }
 
-{ #category : #public }
+{ #category : #private }
 FASTERSearch >> apply [
-	| methodName |
-	methodName := 'transform', this class asString.
-	self perform: methodName asSymbol
+	| transformationPragma applicableTransformations |
+	transformationPragma := Pragma allNamed: #transform in: self class.
+	applicableTransformations := transformationPragma select: [ :aPragma | self this isApplicableTransformation: aPragma method ].
+	applicableTransformations size ~= 1 ifTrue:
+		[ FASTERTransformationsNotProperlySet signalTransformationClass: self class fastClass: this class ].
+	self perform: applicableTransformations first method selector
 ]
 
-{ #category : #searching }
+{ #category : #'public  - searching' }
 FASTERSearch >> find: aSearchedClass [
 	^ self find: aSearchedClass where: [ :e | true ]
 ]
 
-{ #category : #searching }
+{ #category : #'public  - searching' }
 FASTERSearch >> find: aSearchedClass where: aBlock [
 	^ self findAll select: [ :element | element class = aSearchedClass and: [ aBlock value: element ] ]	"asFASTERCollection"
 ]
 
-{ #category : #searching }
+{ #category : #'public  - searching' }
 FASTERSearch >> findAll [
 	^ self scope deepCollect: [ :each | each childrenNodes ]
 ]
@@ -93,9 +118,9 @@ FASTERSearch >> this [
 	^ this
 ]
 
-{ #category : #accessing }
-FASTERSearch >> this: anObject [
-	this := anObject
+{ #category : #private }
+FASTERSearch >> this: aMooseEntity [
+	this := aMooseEntity
 ]
 
 { #category : #accessing }
