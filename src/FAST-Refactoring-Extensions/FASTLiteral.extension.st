@@ -9,6 +9,6 @@ FASTLiteral >> childrenNodes [
 { #category : #'*FAST-Refactoring-Extensions' }
 FASTLiteral >> mooseNameOn: aStream [
 	aStream nextPutAll: self value.
-	aStream nextPutAll: Character space.
+	aStream nextPut: Character space.
 	aStream nextPutAll: self name.
 ]
