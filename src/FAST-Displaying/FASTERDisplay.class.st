@@ -33,14 +33,14 @@ FASTERDisplay >> display [
 	builder nodes: self elements.
 	builder edgesFrom: #parentNode.
 	builder interaction action: #inspect.
-	builder treeLayout.	"ROConstraint stick: labelNode onTheCenterOf: view edges second."
+	builder treeLayout verticalGap:50.	"ROConstraint stick: labelNode onTheCenterOf: view edges second."
 	builder open.
-	builder view edges do: [ :edge | 
+	builder view edges
+		do: [ :edge | 
 			| lbl |
-			lbl := (ROLabel text: 'hello world') element.
+			lbl := (ROLabel text: (self selectorFrom: edge from model to: edge to model) asString)  element.
 			builder view add: lbl.
-			ROConstraint stick: lbl between: edge from and: edge to 
-	]
+			ROConstraint stick: lbl onEdge: edge ]
 ]
 
 { #category : #display }
@@ -67,4 +67,25 @@ FASTERDisplay >> fastEntity [
 { #category : #accessing }
 FASTERDisplay >> fastEntity: anObject [
 	fastEntity := anObject
+]
+
+{ #category : #display }
+FASTERDisplay >> selectorFrom: aRootNode to: aSubNode [
+	| selectorCollection |
+	selectorCollection := self selectorsFromANode: aRootNode.
+	^ selectorCollection
+		detect:
+			[ :selector | 
+			| result |
+			result := aRootNode perform: selector.
+			result isCollection
+				ifTrue: [ result includes: aSubNode ]
+				ifFalse: [ result = aSubNode ] ] ifNone: [ #NOTFOUND ]
+]
+
+{ #category : #accessing }
+FASTERDisplay >> selectorsFromANode: aNode [
+	^ aNode allDeclaredProperties
+		"select: [ :prop | true	prop type isPrimitive not and: [ true prop isDerived not ] ]"
+		collect: [ :prop | prop name ]
 ]
