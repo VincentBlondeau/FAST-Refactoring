@@ -63,19 +63,53 @@ Class {
 		'model',
 		'this',
 		'transformationClass',
-		'scope'
+		'scope',
+		'direction'
 	],
 	#category : #'FAST-Refactoring-Core'
 }
 
 { #category : #private }
 FASTERSearch >> apply [
-	| transformationPragma applicableTransformations |
-	transformationPragma := Pragma allNamed: #transform in: self class.
-	applicableTransformations := transformationPragma select: [ :aPragma | self this isApplicableTransformation: aPragma method ].
-	applicableTransformations size ~= 1 ifTrue:
-		[ FASTERTransformationsNotProperlySet signalTransformationClass: self class fastClass: this class ].
-	self perform: applicableTransformations first method selector
+	| transformations transformationMethod |
+	transformations := self methodsWithValidTransformation.
+	self checkApplicability: transformations.
+	transformationMethod := transformations first method .
+	self changeTheThisIV: transformationMethod.
+	^ self perform: transformationMethod selector
+]
+
+{ #category : #private }
+FASTERSearch >> changeTheThisIV: transformationMethod [
+	(transformationMethod hasPragmaNamed: #in) ifTrue: [ "self this: self this deepCopy" ]
+	"the deepCopy copy all the mooseModel -> not a good idea...."
+	
+]
+
+{ #category : #private }
+FASTERSearch >> checkApplicability: transformations [
+	transformations size > 1
+		ifTrue: [ FASTERSeveralTransformationsAppliables signalTransformationClass: self class fastClass: this class ].
+	transformations
+		ifEmpty: [ FASTERTransformationDoesntExists signalTransformationClass: self class fastClass: this class ]
+]
+
+{ #category : #accessing }
+FASTERSearch >> checkIsValidDirection: aSymbol [
+	| directionList |
+	directionList := #(in inout).
+	(directionList includes: aSymbol) ifFalse: [ FASTERTransformationDirectionNotProperlySet signal ].
+]
+
+{ #category : #'private - accessing' }
+FASTERSearch >> direction [
+	^ direction
+]
+
+{ #category : #'private - accessing' }
+FASTERSearch >> direction: aSymbol [
+	self checkIsValidDirection: aSymbol.
+	direction := aSymbol
 ]
 
 { #category : #'public  - searching' }
@@ -91,6 +125,16 @@ FASTERSearch >> find: aSearchedClass where: aBlock [
 { #category : #'public  - searching' }
 FASTERSearch >> findAll [
 	^ self scope deepCollect: [ :each | each childrenNodes ]
+]
+
+{ #category : #private }
+FASTERSearch >> methodsWithTransformTag [
+	^ (Pragma allNamed: #transform in: self class) collect: [ :pragma | pragma  method ] 
+]
+
+{ #category : #private }
+FASTERSearch >> methodsWithValidTransformation [
+	^ self methodsWithTransformTag select: [ :aCompiledMethod | self this isApplicableTransformation: aCompiledMethod ].
 ]
 
 { #category : #accessing }
@@ -118,7 +162,7 @@ FASTERSearch >> this [
 	^ this
 ]
 
-{ #category : #private }
+{ #category : #'private - accessing' }
 FASTERSearch >> this: aMooseEntity [
 	this := aMooseEntity
 ]

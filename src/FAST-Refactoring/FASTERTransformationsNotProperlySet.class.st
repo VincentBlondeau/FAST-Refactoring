@@ -23,19 +23,22 @@ Class {
 
 { #category : #signalling }
 FASTERTransformationsNotProperlySet class >> signalTransformationClass: aTransformationClass fastClass: aFastClass [
-	^ self new transformationClass: aTransformationClass ;
+	| exception |
+	exception := self new.
+	exception transformationClass: aTransformationClass ;
 		fastObject: aFastClass;
+		messageText: exception errorText;
 		signal
 ]
 
 { #category : #accessing }
 FASTERTransformationsNotProperlySet >> fastObject [
-	^ fastObject
+	^ fastClass
 ]
 
 { #category : #accessing }
 FASTERTransformationsNotProperlySet >> fastObject: anObject [
-	fastObject := anObject
+	fastClass := anObject
 ]
 
 { #category : #accessing }

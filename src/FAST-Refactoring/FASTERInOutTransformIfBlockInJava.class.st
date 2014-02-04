@@ -5,22 +5,23 @@ The purpose is to convert a Smalltalk method to a Java one.
 
 "
 Class {
-	#name : #FASTERTransformIfBlockInJava,
+	#name : #FASTERInOutTransformIfBlockInJava,
 	#superclass : #FASTERSearch,
 	#category : #'FAST-Refactoring-Examples'
 }
 
-{ #category : #'as yet unclassified' }
-FASTERTransformIfBlockInJava >> pharoExpressionToJavaExpression [
+{ #category : #transformation }
+FASTERInOutTransformIfBlockInJava >> pharoExpressionToJavaExpression [
 	<transform>
 	<on: FASTExpression>
 	self flag: 'To implement'.
 	^ this
 ]
 
-{ #category : #'as yet unclassified' }
-FASTERTransformIfBlockInJava >> pharoIfTrueStatementToJavaIfStatement [
+{ #category : #transformation }
+FASTERInOutTransformIfBlockInJava >> pharoIfTrueStatementToJavaIfStatement [
 	<transform>
+	<inout>
 	<on: FASTPharoMessageSend>
 	
 	| ifJavaBlock fastStatementBlock |
@@ -30,26 +31,27 @@ FASTERTransformIfBlockInJava >> pharoIfTrueStatementToJavaIfStatement [
 	"Should be remove ASAP the FMMultilink issue solved !"
 	ifJavaBlock parentNode: this parentNode parentNode.
 	
-	ifJavaBlock condition: (this concreteReceiver --> #FASTERTransformIfBlockInJava).
+	ifJavaBlock condition: (this concreteReceiver --> #FASTERInOutTransformIfBlockInJava).
 	
 	ifJavaBlock condition parentNode: ifJavaBlock.
 	
-	"Il faudra surement enlver le fast statement Block qui n'est plus utilisé en Smalltalk"
+	"Il faudra surement enlever le fast statement Block qui n'est plus utilisé en Smalltalk"
 	fastStatementBlock := FASTStatementBlock new statements: this arguments first block statements.
-	ifJavaBlock thenBody: (fastStatementBlock --> #FASTERTransformIfBlockInJava).
+	ifJavaBlock thenBody: (fastStatementBlock --> #FASTERInOutTransformIfBlockInJava).
 	ifJavaBlock thenBody parentNode: ifJavaBlock.
+	^ ifJavaBlock
 ]
 
-{ #category : #'as yet unclassified' }
-FASTERTransformIfBlockInJava >> pharoStatementBlockToJavaStatementBlock [
+{ #category : #transformation }
+FASTERInOutTransformIfBlockInJava >> pharoStatementBlockToJavaStatementBlock [
 	<transform>
 	<on: FASTStatementBlock>
 	self flag: 'To implement'.
 	^ this
 ]
 
-{ #category : #'as yet unclassified' }
-FASTERTransformIfBlockInJava >> pharoVariableExpressionToJavaExpression [
+{ #category : #transformation }
+FASTERInOutTransformIfBlockInJava >> pharoVariableExpressionToJavaExpression [
 	<transform>
 	<on: FASTVariableExpression>
 	self flag: 'To implement'.

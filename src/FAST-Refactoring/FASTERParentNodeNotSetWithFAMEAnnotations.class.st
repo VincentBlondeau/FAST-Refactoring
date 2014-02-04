@@ -8,7 +8,7 @@ You can resolve this by adding some MSEProperty:type:opposite:  or  transform th
 
 
 =============================
-To change of class  because warning is just intermediate
+ change superclass   because warning is just intermediate and it should be an error
 
 "
 Class {

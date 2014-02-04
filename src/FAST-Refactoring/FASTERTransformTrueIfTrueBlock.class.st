@@ -30,4 +30,6 @@ FASTERTransformTrueIfTrueBlock >> trueifTrueInlineBlock [
 	
 	"Shouldn't be neccesary if the FMMultiLink is solved !"
 	statementsCollection do: [ :localVariable | localVariable parentNode: this parentNode parentNode ].
+	
+	^ this parentNode parentNode
 ]
