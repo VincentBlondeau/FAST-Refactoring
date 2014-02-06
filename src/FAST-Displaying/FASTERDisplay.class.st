@@ -29,16 +29,16 @@ FASTERDisplay >> display [
 		item: 'browse element class' action: [ :el | el browse ].
 	builder shape rectangle
 		size: 40;
-		withCenteredText.	"		fillColor: (RONIdentityNormalizer new command: [ :e | e class name hash])."	"		linearFillColor: [ :e | e class name hash] within: self elements."
+		withCenteredText.
 	builder nodes: self elements.
 	builder edgesFrom: #parentNode.
 	builder interaction action: #inspect.
-	builder treeLayout verticalGap:50.	"ROConstraint stick: labelNode onTheCenterOf: view edges second."
+	builder treeLayout verticalGap: 50.
 	builder open.
 	builder view edges
 		do: [ :edge | 
 			| lbl |
-			lbl := (ROLabel text: (self selectorFrom: edge from model to: edge to model) asString)  element.
+			lbl := (ROLabel text: (self selectorFrom: edge from model to: edge to model) asString) element.
 			builder view add: lbl.
 			ROConstraint stick: lbl onEdge: edge ]
 ]
@@ -85,7 +85,5 @@ FASTERDisplay >> selectorFrom: aRootNode to: aSubNode [
 
 { #category : #accessing }
 FASTERDisplay >> selectorsFromANode: aNode [
-	^ aNode allDeclaredProperties
-		"select: [ :prop | true	prop type isPrimitive not and: [ true prop isDerived not ] ]"
-		collect: [ :prop | prop name ]
+	^ aNode allDeclaredProperties collect: [ :prop | prop name ]
 ]
