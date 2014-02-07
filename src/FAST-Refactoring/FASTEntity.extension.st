@@ -24,7 +24,7 @@ FASTEntity >> checkIsPerfomableSelector: anAccessor [
 
 { #category : #'*FAST-Refactoring-Core' }
 FASTEntity >> classFilterValueFor: aCompiledMethod [
-	 ^ (Pragma inMethod: aCompiledMethod named: #on:) arguments first
+	 ^ (Pragma inMethod: aCompiledMethod named: #transformOn:) arguments first
 
 ]
 
@@ -42,15 +42,11 @@ FASTEntity >> is: aClass [
 
 { #category : #'*FAST-Refactoring-Core' }
 FASTEntity >> isApplicableTransformation: aCompiledMethod [
-	^ self isClassFilterValidIn: aCompiledMethod
-
-
+	^ self isClassFilterValidIn: (self classFilterValueFor: aCompiledMethod)
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> isClassFilterValidIn: aCompiledMethod [
-	| requiredClass |
-	requiredClass := self classFilterValueFor: aCompiledMethod.
+FASTEntity >> isClassFilterValidIn: requiredClass [
 	^ self class name = requiredClass or: [self class subclasses includes: requiredClass ]
 
 

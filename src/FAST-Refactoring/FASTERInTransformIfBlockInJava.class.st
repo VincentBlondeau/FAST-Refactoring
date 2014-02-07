@@ -6,39 +6,39 @@ The purpose is to convert a Smalltalk method to a Java one.
 "
 Class {
 	#name : #FASTERInTransformIfBlockInJava,
-	#superclass : #FASTERSearch,
+	#superclass : #FASTERTransform,
 	#category : #'FAST-Refactoring-Examples'
 }
 
 { #category : #transformation }
 FASTERInTransformIfBlockInJava >> pharoFASTExpressionStatementToNewJavaExpressionStatement [
-	<transform>
+	<transformOn: FASTExpressionStatement>
 	<in>
-	<on: FASTExpressionStatement>
+	
 	^ FASTExpressionStatement new
 ]
 
 { #category : #transformation }
 FASTERInTransformIfBlockInJava >> pharoFASTVariableExpressionToNewJavaVariableExpression [
-	<transform>
+	<transformOn: FASTVariableExpression>
 	<in>
-	<on: FASTVariableExpression>
+
 	^ FASTJavaVarDeclStatement new
 ]
 
 { #category : #transformation }
 FASTERInTransformIfBlockInJava >> pharoIfTrueStatementToNewJavaIfStatement [
-	<transform>
+	<transformOn: FASTPharoMessageSend>
 	<in>
-	<on: FASTPharoMessageSend>
+
 	"For this example , we suppose that the JavaIfStatement is the root of the FAST model"
 	| ifJavaBlock  |
 	ifJavaBlock := FASTJavaIfStatement new.
 	
-	ifJavaBlock condition: (this concreteReceiver --> #FASTERInTransformIfBlockInJava).
+	ifJavaBlock condition: (this concreteReceiver --> FASTERInTransformIfBlockInJava).
 	"ifJavaBlock condition parentNode: ifJavaBlock."
 
-	ifJavaBlock thenBody: (this arguments first block statements --> #FASTERInTransformIfBlockInJava).
+	ifJavaBlock thenBody: (this arguments first block statements --> FASTERInTransformIfBlockInJava).
 	"ifJavaBlock thenBody parentNode: ifJavaBlock."
 	
 	"Don't forget to treat the block local variables "

@@ -8,5 +8,5 @@ A FASTERTransformationDirectionNotProperlySet is an exception risen when the dir
 Class {
 	#name : #FASTERTransformationDirectionNotProperlySet,
 	#superclass : #FASTERException,
-	#category : #'FAST-Refactoring-Core'
+	#category : #'FAST-Refactoring-Exceptions'
 }

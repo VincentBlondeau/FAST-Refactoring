@@ -12,7 +12,6 @@ FASTERSearchTest >> setUp [
 	super setUp.
 	fastSearch := FASTERSearch new 
 		model: self model; 
-		"transformationClass: #FASTERInOutTransformIfBlockInJava;"
 		yourself.
 ]
 
