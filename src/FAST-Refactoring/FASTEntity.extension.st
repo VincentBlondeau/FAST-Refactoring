@@ -53,7 +53,7 @@ FASTEntity >> isClassFilterValidIn: requiredClass [
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> remove: anObject in: anAccessorReturningACollection [
+FASTEntity >> remove: anObject from: anAccessorReturningACollection [
 	| collection |
 	collection := self collectionFromAccessorNamed: anAccessorReturningACollection.
 	anObject isCollection
@@ -65,9 +65,7 @@ FASTEntity >> remove: anObject in: anAccessorReturningACollection [
 FASTEntity >> updateOpposite: aSelector [
 	| collection |
 	"check if the annotations for the metamodel are correctly set. So if the parents nodes are set"
-	self flag: 'rename'.
-	"Pragma inMethod: (self class lookupSelector:  aSelector asSymbol) named: #MSEProperty:type:opposite:."
 	collection := self perform: aSelector.
-	collection do: [ :e | e parentNode ifNil: [ "FASTERParentNodeNotSetWithFAMEAnnotations signal" ] ]
+	collection do: [ :e | e parentNode ifNil: [ FASTERParentNodeNotSetByFAME signal ] ]
 
 ]

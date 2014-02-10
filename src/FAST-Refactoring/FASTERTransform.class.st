@@ -79,6 +79,11 @@ FASTERTransform >> methodsWithValidTransformation [
 	^ self methodsWithTransformOnTag select: [ :aCompiledMethod | self this isApplicableTransformation: aCompiledMethod ].
 ]
 
+{ #category : #'public - processing' }
+FASTERTransform >> run [
+	^ super run --> self class
+]
+
 { #category : #accessing }
 FASTERTransform >> transformationClass [
 	^ transformationClass

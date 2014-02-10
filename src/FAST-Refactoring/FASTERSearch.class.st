@@ -88,10 +88,9 @@ FASTERSearch >> model: anObject [
 
 { #category : #'public - processing' }
 FASTERSearch >> run [
-	| method resultCollection |
-	method :=self methodsWithSearchTag first.
-	resultCollection := self perform: method selector.
-	^ resultCollection --> self class
+	| method |
+	method := self methodsWithSearchTag first.
+	^ self perform: method selector
 ]
 
 { #category : #accessing }

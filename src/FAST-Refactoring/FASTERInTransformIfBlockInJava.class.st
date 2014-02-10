@@ -30,17 +30,20 @@ FASTERInTransformIfBlockInJava >> pharoFASTVariableExpressionToNewJavaVariableEx
 FASTERInTransformIfBlockInJava >> pharoIfTrueStatementToNewJavaIfStatement [
 	<transformOn: FASTPharoMessageSend>
 	<in>
-
 	"For this example , we suppose that the JavaIfStatement is the root of the FAST model"
 	| ifJavaBlock  |
 	ifJavaBlock := FASTJavaIfStatement new.
 	
 	ifJavaBlock condition: (this concreteReceiver --> FASTERInTransformIfBlockInJava).
-	"ifJavaBlock condition parentNode: ifJavaBlock."
 
-	ifJavaBlock thenBody: (this arguments first block statements --> FASTERInTransformIfBlockInJava).
-	"ifJavaBlock thenBody parentNode: ifJavaBlock."
+	ifJavaBlock thenBody: (FASTStatementBlock new statements: (this arguments first block statements --> FASTERInTransformIfBlockInJava)).
 	
 	"Don't forget to treat the block local variables "
 	^ ifJavaBlock
+]
+
+{ #category : #transformation }
+FASTERInTransformIfBlockInJava >> searchIfTrueMessage [
+	<search>
+	^ self find: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue: ]
 ]

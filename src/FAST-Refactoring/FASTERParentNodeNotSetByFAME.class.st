@@ -12,7 +12,7 @@ You can resolve this by adding some MSEProperty:type:opposite:  or  transform th
 
 "
 Class {
-	#name : #FASTERParentNodeNotSetWithFAMEAnnotations,
+	#name : #FASTERParentNodeNotSetByFAME,
 	#superclass : #Warning,
 	#category : #'FAST-Refactoring-Exceptions'
 }

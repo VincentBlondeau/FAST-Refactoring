@@ -64,18 +64,18 @@ FASTERExtensionTest >> testAddInShouldAddTwoFASTEntitiesInTheLocalVariableInstan
 
 { #category : #tests }
 FASTERExtensionTest >> testRemoveInAnInexsistantVariableShouldRaiseANotFoundException [
-	self should: [method remove: entity in: #variablesLocales] raise: NotFound.
+	self should: [method remove: entity from: #variablesLocales] raise: NotFound.
 ]
 
 { #category : #tests }
 FASTERExtensionTest >> testRemoveInCollectionWhichDoesntContainTheVariableShouldRaiseANotFoundException [
-	self should: [method remove: entityNamedVariable in: #localVariables] raise: NotFound.
+	self should: [method remove: entityNamedVariable from: #localVariables] raise: NotFound.
 ]
 
 { #category : #tests }
 FASTERExtensionTest >> testRemoveInShouldRemoveTheFASTEntityInTheLocalVariableInstanceVariable [
 	method localVariables addAll: entities.
-	method remove: entityNamedVariable in: #localVariables.
+	method remove: entityNamedVariable from: #localVariables.
 	self assert: (method localVariables includes: entityStatementBlock).
 ]
 
@@ -83,7 +83,7 @@ FASTERExtensionTest >> testRemoveInShouldRemoveTheFASTEntityInTheLocalVariableIn
 FASTERExtensionTest >> testRemoveInShouldRemoveTwoFASTEntitiesInTheLocalVariableInstanceVariable [
 	method localVariables addAll: entities.
 	method localVariables addAll: entitiesToRemove.
-	method remove: entitiesToRemove in: #localVariables.
+	method remove: entitiesToRemove from: #localVariables.
 	self assert: method localVariables isCollection.
 	self assert: (method localVariables includesAll: entities).
 ]

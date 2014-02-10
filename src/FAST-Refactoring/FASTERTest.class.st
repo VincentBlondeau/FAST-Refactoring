@@ -14,7 +14,7 @@ FASTERTest >> generateFASTOnModel: aModel [
 	
 ]
 
-{ #category : #running }
+{ #category : #generating }
 FASTERTest >> importModel [
 	MoosePharoImporterTask new
 		importerClass: SmalltalkImporter;
@@ -23,7 +23,7 @@ FASTERTest >> importModel [
 		run.
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 FASTERTest >> methodNamed: aMethodName [
 	^ self model allMethods detect: [ :m | m name = aMethodName ]
 ]
