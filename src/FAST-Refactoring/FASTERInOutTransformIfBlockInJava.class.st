@@ -24,7 +24,8 @@ FASTERInOutTransformIfBlockInJava >> pharoIfTrueStatementToJavaIfStatement [
 	| ifJavaBlock fastStatementBlock |
 	
 	ifJavaBlock := FASTJavaIfStatement new.
-	this parentNode parentNode add: ifJavaBlock in: #statements; remove: this parentNode from: #statements.
+	
+	this parentNode parentNode add: ifJavaBlock insteadOf: this parentNode in:  #statements.
 	
 	ifJavaBlock condition: (this concreteReceiver --> FASTERInOutTransformIfBlockInJava).
 

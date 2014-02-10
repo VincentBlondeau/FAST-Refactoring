@@ -29,12 +29,12 @@ FASTERExtensionTest >> setUp [
 
 { #category : #tests }
 FASTERExtensionTest >> testAddInAnInexsistantVariableShouldRaiseANotFoundException [
-	self should: [method add: entityNamedVariable in: #variablesLocales] raise: NotFound.
+	self should: [method addLast: entityNamedVariable in: #variablesLocales] raise: NotFound.
 ]
 
 { #category : #tests }
 FASTERExtensionTest >> testAddInShouldAddAFASTEntityInMethodStatements [
-	method add: entityStatement in: #statements.
+	method addLast: entityStatement in: #statements.
 	self assert: method statements size = 1.
 	self assert: method statements first == entityStatement.
 	self assert: entityStatement parentNode equals: method
@@ -42,7 +42,7 @@ FASTERExtensionTest >> testAddInShouldAddAFASTEntityInMethodStatements [
 
 { #category : #tests }
 FASTERExtensionTest >> testAddInShouldAddAFASTEntityInStatements [
-	entityStatementBlock add: entityStatement in: #statements.
+	entityStatementBlock addLast: entityStatement in: #statements.
 	self assert: entityStatementBlock statements size = 1.
 	self assert: entityStatementBlock statements first == entityStatement.
 	self assert: entityStatement parentNode equals: entityStatementBlock
@@ -50,14 +50,14 @@ FASTERExtensionTest >> testAddInShouldAddAFASTEntityInStatements [
 
 { #category : #tests }
 FASTERExtensionTest >> testAddInShouldAddAFASTEntityInTheLocalVariableInstanceVariable [
-	method add: entityNamedVariable in: #localVariables.
+	method addLast: entityNamedVariable in: #localVariables.
 	self assert: method localVariables size = 1.
 	self assert: method localVariables first == entityNamedVariable.
 ]
 
 { #category : #tests }
 FASTERExtensionTest >> testAddInShouldAddTwoFASTEntitiesInTheLocalVariableInstanceVariable [
-	method add: entities in: #localVariables.
+	method addLast: entities in: #localVariables.
 	self assert: method localVariables size = 2.
 	self assert: (method localVariables includes: entityNamedVariable).
 ]

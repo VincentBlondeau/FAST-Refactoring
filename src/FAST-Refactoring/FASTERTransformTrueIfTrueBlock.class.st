@@ -26,11 +26,11 @@ FASTERTransformTrueIfTrueBlock >> trueifTrueInlineBlock [
 	
 	"Move the statements of the block to the upper BehaviouralEntity"
 	statementsCollection := this arguments first block statements.
-	behaviouralEntity add: statementsCollection in: #statements; remove: this parentNode from: #statements.
+	behaviouralEntity add: statementsCollection insteadOf: this parentNode in: #statements.
 	
 	"Move the variables of the block to the upper BehaviouralEntity"
 	localVariables := this arguments first block localVariables.
-	behaviouralEntity add: localVariables in: #localVariables.
+	behaviouralEntity addLast: localVariables in: #localVariables.
 	
 	^ behaviouralEntity
 ]

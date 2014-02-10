@@ -6,11 +6,28 @@ FASTEntity >> --> aTransformationMethodName [
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> add: anObject in: anAccessorReturningACollection [
+FASTEntity >> add: anObject after: anAfterObject in: anAccessorReturningACollection [
 	| collection |
 	collection := self collectionFromAccessorNamed: anAccessorReturningACollection.
 	anObject isCollection
-		ifTrue: [ collection addAll: anObject ]
+		ifTrue: [ anObject reverseDo: [ :each | collection add: each after: anAfterObject ]]
+		ifFalse: [ collection add: anObject after: anAfterObject].
+	self updateOpposite: anAccessorReturningACollection
+]
+
+{ #category : #'*FAST-Refactoring-Core' }
+FASTEntity >> add: anObject insteadOf: anAfterObject in: anAccessorReturningACollection [
+	self add: anObject after: anAfterObject in: anAccessorReturningACollection.
+	self remove: anAfterObject from: anAccessorReturningACollection
+]
+
+{ #category : #'*FAST-Refactoring-Core' }
+FASTEntity >> addLast: anObject in: anAccessorReturningACollection [
+	"As FMMultivalueLink use the add: method form OrderedCollection which use the addLast method, we can use the add: method here !"
+	| collection |
+	collection := self collectionFromAccessorNamed: anAccessorReturningACollection.
+	anObject isCollection
+		ifTrue: [ anObject do: [ :each | collection add: each ]]
 		ifFalse: [ collection add: anObject ].
 	self updateOpposite: anAccessorReturningACollection
 ]

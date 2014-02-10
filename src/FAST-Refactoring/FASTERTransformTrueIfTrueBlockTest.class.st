@@ -12,7 +12,6 @@ FASTERTransformTrueIfTrueBlockTest >> fasterClass [
 { #category : #tests }
 FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueBlockRemovalTransformation [
 	| result fasterTransform |
-	(self methodNamed: #trueIfTrueMethod) display.
 	fasterTransform := FASTERTransformTrueIfTrueBlock new scope: (self methodNamed: #trueIfTrueMethod).
 	result := fasterTransform run.
 	self
@@ -27,7 +26,6 @@ FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueNestedBlockRemovalTransforma
 	| fasterTransform result |
 	fasterTransform := FASTERTransformTrueIfTrueBlock new scope: (self methodNamed: #trueIfTrueNestedMethod).
 	result := fasterTransform run.
-		FASTERDisplay display: result first.
 	self
 		assert: result first print
 		equals:
