@@ -89,7 +89,7 @@ FASTERSearch >> model: anObject [
 FASTERSearch >> run [
 	| method |
 	method := self methodsWithSearchTag first.
-	^ self perform: method selector
+	^ self perform: method selector 
 ]
 
 { #category : #accessing }
