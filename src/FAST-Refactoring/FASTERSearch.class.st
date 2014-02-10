@@ -50,7 +50,6 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'model',
-		'this',
 		'scope'
 	],
 	#category : #'FAST-Refactoring-Core'
@@ -101,14 +100,4 @@ FASTERSearch >> scope [
 { #category : #accessing }
 FASTERSearch >> scope: aScope [
 	scope := aScope
-]
-
-{ #category : #accessing }
-FASTERSearch >> this [
-	^ this
-]
-
-{ #category : #'private - accessing' }
-FASTERSearch >> this: aMooseEntity [
-	this := aMooseEntity
 ]

@@ -21,7 +21,8 @@ Class {
 	#superclass : #FASTERSearch,
 	#instVars : [
 		'transformationClass',
-		'direction'
+		'direction',
+		'inNode'
 	],
 	#category : #'FAST-Refactoring-Core'
 }
@@ -46,9 +47,9 @@ FASTERTransform >> changeTheThisIV: transformationMethod [
 { #category : #private }
 FASTERTransform >> checkApplicability: transformations [
 	transformations size > 1
-		ifTrue: [ FASTERSeveralTransformationsAppliables signalTransformationClass: self class fastClass: this class ].
+		ifTrue: [ FASTERSeveralTransformationsAppliables signalTransformationClass: self class fastClass: inNode class ].
 	transformations
-		ifEmpty: [ FASTERTransformationDoesntExists signalTransformationClass: self class fastClass: this class ]
+		ifEmpty: [ FASTERTransformationDoesntExists signalTransformationClass: self class fastClass: inNode class ]
 ]
 
 { #category : #accessing }
@@ -82,6 +83,16 @@ FASTERTransform >> methodsWithValidTransformation [
 { #category : #'public - processing' }
 FASTERTransform >> run [
 	^ super run --> self class
+]
+
+{ #category : #accessing }
+FASTERTransform >> this [
+	^ inNode
+]
+
+{ #category : #'private - accessing' }
+FASTERTransform >> this: aMooseEntity [
+	inNode := aMooseEntity
 ]
 
 { #category : #accessing }

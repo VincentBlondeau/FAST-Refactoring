@@ -24,6 +24,7 @@ FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueBlockRemovalTransformation [
 { #category : #tests }
 FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueNestedBlockRemovalTransformation [
 	| fasterTransform result |
+	(self methodNamed: #trueIfTrueNestedMethod) display.
 	fasterTransform := FASTERTransformTrueIfTrueBlock new scope: (self methodNamed: #trueIfTrueNestedMethod).
 	result := fasterTransform run.
 	self

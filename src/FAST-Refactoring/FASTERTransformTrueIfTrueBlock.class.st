@@ -22,14 +22,14 @@ FASTERTransformTrueIfTrueBlock >> searchTrueifTruePattern [
 FASTERTransformTrueIfTrueBlock >> trueifTrueInlineBlock [
 	<transformOn: FASTPharoMessageSend>
 	| statementsCollection localVariables behaviouralEntity |
-	behaviouralEntity := this parentNode parentNode .
+	behaviouralEntity := inNode parentNode parentNode .
 	
 	"Move the statements of the block to the upper BehaviouralEntity"
-	statementsCollection := this arguments first block statements.
-	behaviouralEntity add: statementsCollection insteadOf: this parentNode in: #statements.
+	statementsCollection := inNode arguments first block statements.
+	behaviouralEntity add: statementsCollection insteadOf: inNode parentNode in: #statements.
 	
 	"Move the variables of the block to the upper BehaviouralEntity"
-	localVariables := this arguments first block localVariables.
+	localVariables := inNode arguments first block localVariables.
 	behaviouralEntity addLast: localVariables in: #localVariables.
 	
 	^ behaviouralEntity

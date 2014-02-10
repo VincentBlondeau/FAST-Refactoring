@@ -14,7 +14,7 @@ Class {
 FASTERInOutTransformIfBlockInJava >> pharoExpressionToJavaExpression [
 	<transformOn: FASTExpression>
 	self flag: 'To implement'.
-	^ this
+	^ inNode
 ]
 
 { #category : #transformation }
@@ -25,13 +25,13 @@ FASTERInOutTransformIfBlockInJava >> pharoIfTrueStatementToJavaIfStatement [
 	
 	ifJavaBlock := FASTJavaIfStatement new.
 	
-	this parentNode parentNode add: ifJavaBlock insteadOf: this parentNode in:  #statements.
+	inNode parentNode parentNode add: ifJavaBlock insteadOf: inNode parentNode in:  #statements.
 	
-	ifJavaBlock condition: (this concreteReceiver --> FASTERInOutTransformIfBlockInJava).
+	ifJavaBlock condition: (inNode concreteReceiver --> FASTERInOutTransformIfBlockInJava).
 
 	
 	"Il faudra surement enlever le fast statement Block qui n'est plus utilisé en Smalltalk"
-	fastStatementBlock := FASTStatementBlock new statements: this arguments first block statements.
+	fastStatementBlock := FASTStatementBlock new statements: inNode arguments first block statements.
 	ifJavaBlock thenBody: (fastStatementBlock --> FASTERInOutTransformIfBlockInJava).
 	^ ifJavaBlock
 ]
@@ -40,14 +40,14 @@ FASTERInOutTransformIfBlockInJava >> pharoIfTrueStatementToJavaIfStatement [
 FASTERInOutTransformIfBlockInJava >> pharoStatementBlockToJavaStatementBlock [
 	<transformOn: FASTStatementBlock>
 	self flag: 'To implement'.
-	^ this
+	^ inNode
 ]
 
 { #category : #transformation }
 FASTERInOutTransformIfBlockInJava >> pharoVariableExpressionToJavaExpression [
 	<transformOn: FASTVariableExpression>
 	self flag: 'To implement'.
-	^ this
+	^ inNode
 ]
 
 { #category : #transformation }
