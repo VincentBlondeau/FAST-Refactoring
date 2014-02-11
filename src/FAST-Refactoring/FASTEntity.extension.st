@@ -2,7 +2,7 @@ Extension { #name : #FASTEntity }
 
 { #category : #'*FAST-Refactoring-Core' }
 FASTEntity >> --> aTransformationMethodName [
-	self asOrderedCollection --> aTransformationMethodName
+	^ self asOrderedCollection --> aTransformationMethodName
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
@@ -64,7 +64,7 @@ FASTEntity >> isApplicableTransformation: aCompiledMethod [
 
 { #category : #'*FAST-Refactoring-Core' }
 FASTEntity >> isClassFilterValidIn: requiredClass [
-	^ self class name = requiredClass or: [self class subclasses includes: requiredClass ]
+	^ self class name = requiredClass or: [requiredClass asClass allSubclasses includes: self class ]
 
 
 ]

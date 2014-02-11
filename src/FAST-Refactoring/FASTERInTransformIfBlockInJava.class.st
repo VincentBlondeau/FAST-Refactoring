@@ -34,7 +34,7 @@ FASTERInTransformIfBlockInJava >> pharoIfTrueStatementToNewJavaIfStatement [
 	| ifJavaBlock  |
 	ifJavaBlock := FASTJavaIfStatement new.
 	
-	ifJavaBlock condition: (inNode concreteReceiver --> FASTERInTransformIfBlockInJava).
+	ifJavaBlock condition: (inNode concreteReceiver --> FASTERInTransformIfBlockInJava) first.
 
 	ifJavaBlock thenBody: (FASTStatementBlock new statements: (inNode arguments first block statements --> FASTERInTransformIfBlockInJava)).
 	

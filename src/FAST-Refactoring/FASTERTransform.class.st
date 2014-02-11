@@ -32,9 +32,10 @@ FASTERTransform >> apply [
 	| transformations transformationMethod |
 	transformations := self methodsWithValidTransformation.
 	self checkApplicability: transformations.
+	transformations ifEmpty: [ ^ self defaultRule ] ifNotEmpty:  [ 
 	transformationMethod := transformations first method .
 	self changeTheThisIV: transformationMethod.
-	^ self perform: transformationMethod selector
+	^ self perform: transformationMethod selector ]
 ]
 
 { #category : #private }
@@ -48,8 +49,7 @@ FASTERTransform >> changeTheThisIV: transformationMethod [
 FASTERTransform >> checkApplicability: transformations [
 	transformations size > 1
 		ifTrue: [ FASTERSeveralTransformationsAppliables signalTransformationClass: self class fastClass: inNode class ].
-	transformations
-		ifEmpty: [ FASTERTransformationDoesntExists signalTransformationClass: self class fastClass: inNode class ]
+
 ]
 
 { #category : #accessing }
@@ -57,6 +57,11 @@ FASTERTransform >> checkIsValidDirection: aSymbol [
 	| directionList |
 	directionList := #(in inout).
 	(directionList includes: aSymbol) ifFalse: [ FASTERTransformationDirectionNotProperlySet signal ].
+]
+
+{ #category : #'as yet unclassified' }
+FASTERTransform >> defaultRule [
+	^ inNode childrenNodes ifNotNil: [ (inNode childrenNodes --> self class) ]
 ]
 
 { #category : #'private - accessing' }
@@ -70,6 +75,16 @@ FASTERTransform >> direction: aSymbol [
 	direction := aSymbol
 ]
 
+{ #category : #accessing }
+FASTERTransform >> inNode [
+	^ inNode
+]
+
+{ #category : #'private - accessing' }
+FASTERTransform >> inNode: aMooseEntity [
+	inNode := aMooseEntity
+]
+
 { #category : #private }
 FASTERTransform >> methodsWithTransformOnTag [
 	^ (Pragma allNamed: #transformOn: in: self class) collect: [ :pragma | pragma  method ] 
@@ -77,22 +92,12 @@ FASTERTransform >> methodsWithTransformOnTag [
 
 { #category : #private }
 FASTERTransform >> methodsWithValidTransformation [
-	^ self methodsWithTransformOnTag select: [ :aCompiledMethod | self this isApplicableTransformation: aCompiledMethod ].
+	^ self methodsWithTransformOnTag select: [ :aCompiledMethod | self inNode isApplicableTransformation: aCompiledMethod ].
 ]
 
 { #category : #'public - processing' }
 FASTERTransform >> run [
 	^ super run --> self class
-]
-
-{ #category : #accessing }
-FASTERTransform >> this [
-	^ inNode
-]
-
-{ #category : #'private - accessing' }
-FASTERTransform >> this: aMooseEntity [
-	inNode := aMooseEntity
 ]
 
 { #category : #accessing }
