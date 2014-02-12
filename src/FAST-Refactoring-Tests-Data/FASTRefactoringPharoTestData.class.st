@@ -44,13 +44,13 @@ FASTRefactoringPharoTestData >> trueIfTrueNestedAndParallelMethod [
 				foo1 ;
 				inlineMethod1;
 				bar1.
-				true ifTrue: [ self ]
+				true ifTrue: [ self m1 ]
 	].	
 	true ifTrue: [ self
 				bar2 ;
 				inlineMethod2;
 				foo2.
-				true ifTrue: [ self ]
+				true ifTrue: [ self m2 ]
 	].
 ]
 
@@ -60,12 +60,12 @@ FASTRefactoringPharoTestData >> trueIfTrueNestedAndParallelTransformedMethod [
 		foo1;
 		inlineMethod1;
 		bar1.
-	self.
+	self m1.
 	self
 		bar2;
 		inlineMethod2;
 		foo2.
-	self
+	self m2
 ]
 
 { #category : #tests }
