@@ -22,9 +22,9 @@ FASTERDisplay >> display [
 	builder := ROMondrianViewBuilder new.
 	builder title: 'FAST Representation'.
 	builder interaction
-		on: ROMouseClick
-		do: [ :event | ROFocusView on: event element ].
-	builder interaction
+		noPopup;
+		on: ROMouseLeftClick
+		do: [ :event | ROFocusView on: event element ];
 		item: 'inspect element' action: #inspect;
 		item: 'browse element class' action: [ :el | el browse ].
 	builder shape rectangle
@@ -32,7 +32,7 @@ FASTERDisplay >> display [
 		withCenteredText.
 	builder nodes: self elements.
 	builder edgesFrom: #parentNode.
-	builder interaction action: #inspect.
+	"builder interaction action: #inspect."
 	builder treeLayout verticalGap: 50.
 	builder open.
 	builder view edges
@@ -73,14 +73,20 @@ FASTERDisplay >> fastEntity: anObject [
 FASTERDisplay >> selectorFrom: aRootNode to: aSubNode [
 	| selectorCollection |
 	selectorCollection := self selectorsFromANode: aRootNode.
-	^ selectorCollection
-		detect:
-			[ :selector | 
+	selectorCollection
+		do: [ :selector | 
 			| result |
 			result := aRootNode perform: selector.
 			result isCollection
-				ifTrue: [ result includes: aSubNode ]
-				ifFalse: [ result = aSubNode ] ] ifNone: [ #NOTFOUND ]
+				ifTrue: [ 
+					result
+						withIndexDo: [ :element :index | 
+							(element = aSubNode)
+								ifTrue: [ ^ selector asString , index asString ] ] ]
+				ifFalse: [ 
+					result = aSubNode
+						ifTrue: [ ^ selector ] ] ].
+	^ 'NOTFOUND'
 ]
 
 { #category : #accessing }
