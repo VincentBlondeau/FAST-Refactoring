@@ -1,5 +1,5 @@
 Class {
-	#name : #ConfigurationOfFASTRefactoring,
+	#name : #'ConfigurationOfFAST-Refactoring',
 	#superclass : #Object,
 	#instVars : [
 		'project'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #'development support' }
-ConfigurationOfFASTRefactoring class >> DevelopmentSupport [
+ConfigurationOfFAST-Refactoring class >> DevelopmentSupport [
 
 "See the methods in the 'development support' category on the class-side of MetacelloBaseConfiguration. Decide what development support methods you would like to use and copy them the the class-side of your configuration."
 	<apiDocumentation>
@@ -19,7 +19,7 @@ ConfigurationOfFASTRefactoring class >> DevelopmentSupport [
 ]
 
 { #category : #private }
-ConfigurationOfFASTRefactoring class >> baseConfigurationClassIfAbsent: aBlock [
+ConfigurationOfFAST-Refactoring class >> baseConfigurationClassIfAbsent: aBlock [
 
 	^Smalltalk
 		at: #MetacelloBaseConfiguration
@@ -30,13 +30,13 @@ ConfigurationOfFASTRefactoring class >> baseConfigurationClassIfAbsent: aBlock [
 ]
 
 { #category : #private }
-ConfigurationOfFASTRefactoring class >> ensureMetacello [
+ConfigurationOfFAST-Refactoring class >> ensureMetacello [
 
 	(self baseConfigurationClassIfAbsent: []) ensureMetacello
 ]
 
 { #category : #private }
-ConfigurationOfFASTRefactoring class >> ensureMetacelloBaseConfiguration [
+ConfigurationOfFAST-Refactoring class >> ensureMetacelloBaseConfiguration [
 
 	Smalltalk
 		at: #MetacelloBaseConfiguration
@@ -52,14 +52,14 @@ ConfigurationOfFASTRefactoring class >> ensureMetacelloBaseConfiguration [
 ]
 
 { #category : #'metacello tool support' }
-ConfigurationOfFASTRefactoring class >> isMetacelloConfig [
+ConfigurationOfFAST-Refactoring class >> isMetacelloConfig [
 	"Answer true and the Metacello tools will operate on you"
 	
 	^true
 ]
 
 { #category : #loading }
-ConfigurationOfFASTRefactoring class >> load [
+ConfigurationOfFAST-Refactoring class >> load [
 	"Load the #stable version defined for this platform. The #stable version is the version that is recommended to be used on this platform."
 
 	"self load"
@@ -69,7 +69,7 @@ ConfigurationOfFASTRefactoring class >> load [
 ]
 
 { #category : #loading }
-ConfigurationOfFASTRefactoring class >> loadBleedingEdge [
+ConfigurationOfFAST-Refactoring class >> loadBleedingEdge [
 	"Load the latest versions of the mcz files defined for this project. It is not likely that the #bleedingEdge has been tested."
 
 	"self loadBleedingEdge"
@@ -79,7 +79,7 @@ ConfigurationOfFASTRefactoring class >> loadBleedingEdge [
 ]
 
 { #category : #loading }
-ConfigurationOfFASTRefactoring class >> loadDevelopment [
+ConfigurationOfFAST-Refactoring class >> loadDevelopment [
 	"Load the #development version defined for this platform. The #development version will change over time and is not expected to be stable."
 
 	"self loadDevelopment"
@@ -89,13 +89,13 @@ ConfigurationOfFASTRefactoring class >> loadDevelopment [
 ]
 
 { #category : #accessing }
-ConfigurationOfFASTRefactoring class >> project [
+ConfigurationOfFAST-Refactoring class >> project [
 
 	^self new project
 ]
 
 { #category : #'development support' }
-ConfigurationOfFASTRefactoring class >> validate [
+ConfigurationOfFAST-Refactoring class >> validate [
 	"Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). 
 	Errors identify specification issues that will result in unexpected behaviour when you load the configuration. 
 	Critical Warnings identify specification issues that may result in unexpected behavior when you load the configuration.
@@ -109,7 +109,7 @@ ConfigurationOfFASTRefactoring class >> validate [
 ]
 
 { #category : #baselines }
-ConfigurationOfFASTRefactoring >> baseline01: spec [
+ConfigurationOfFAST-Refactoring >> baseline01: spec [
 	<version: '0.1-baseline'> 
 
 	spec for: #'common' do: [
@@ -135,7 +135,7 @@ ConfigurationOfFASTRefactoring >> baseline01: spec [
 ]
 
 { #category : #accessing }
-ConfigurationOfFASTRefactoring >> customProjectAttributes [
+ConfigurationOfFAST-Refactoring >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
 	For more information see: http://code.google.com/p/metacello/wiki/CustomProjectAttrributes"
 
@@ -143,7 +143,7 @@ ConfigurationOfFASTRefactoring >> customProjectAttributes [
 ]
 
 { #category : #'symbolic versions' }
-ConfigurationOfFASTRefactoring >> development: spec [
+ConfigurationOfFAST-Refactoring >> development: spec [
 	<symbolicVersion: #'development'>
 
 	spec for: #'common' version: '0.1-baseline'. 
@@ -151,7 +151,7 @@ ConfigurationOfFASTRefactoring >> development: spec [
 ]
 
 { #category : #accessing }
-ConfigurationOfFASTRefactoring >> project [
+ConfigurationOfFAST-Refactoring >> project [
 
 	^ project ifNil: [ 
 		"Bootstrap Metacello if it is not already loaded"
