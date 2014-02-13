@@ -110,10 +110,11 @@ ConfigurationOfFAST-Refactoring class >> validate [
 
 { #category : #baselines }
 ConfigurationOfFAST-Refactoring >> baseline01: spec [
-	<version: '0.1-baseline'> 
+	<version: '0.1-baseline'>
 
 	spec for: #'common' do: [
 		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/VincentBlondeau/FAST-Refactoring/main/'.
 		spec 
 			project: 'FASTJava' with: [
 				spec
