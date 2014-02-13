@@ -79,10 +79,13 @@ FASTERDisplay >> selectorFrom: aRootNode to: aSubNode [
 			result := aRootNode perform: selector.
 			result isCollection
 				ifTrue: [ 
-					result
-						withIndexDo: [ :element :index | 
-							(element = aSubNode)
-								ifTrue: [ ^ selector asString , index asString ] ] ]
+					result isSequenceable
+						ifTrue: [ 
+							result
+								withIndexDo: [ :element :index | 
+									element = aSubNode
+										ifTrue: [ ^ selector asString , index asString ] ] ]
+						ifFalse: [ (result includes: aSubNode) ifTrue: [^ selector asString ]] ]
 				ifFalse: [ 
 					result = aSubNode
 						ifTrue: [ ^ selector ] ] ].
