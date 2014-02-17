@@ -30,6 +30,15 @@ FASTRefactoringPharoTestData >> inlineMethod [
 ]
 
 { #category : #tests }
+FASTRefactoringPharoTestData >> trueIfTrueCascadeMethod [
+	true
+		foo1;
+		inlineMethod1;
+		bar1;
+		ifTrue: [ self m1 ]
+]
+
+{ #category : #tests }
 FASTRefactoringPharoTestData >> trueIfTrueMethod [
 	true ifTrue: [ self
 				foo;
