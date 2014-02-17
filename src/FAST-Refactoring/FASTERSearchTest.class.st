@@ -2,7 +2,7 @@ Class {
 	#name : #FASTERSearchTest,
 	#superclass : #FASTERTest,
 	#instVars : [
-		'search'
+		'fasterInstance'
 	],
 	#category : #'FAST-Refactoring-Tests-Core'
 }
@@ -15,6 +15,6 @@ FASTERSearchTest >> fasterClass [
 { #category : #running }
 FASTERSearchTest >> setUp [
 	super setUp.
-	search := self fasterClass new
+	fasterInstance := self fasterClass new
 		model: self model.
 ]

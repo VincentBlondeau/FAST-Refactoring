@@ -12,7 +12,7 @@ FASTERInTransformSTToJavaTest >> fasterClass [
 { #category : #tests }
 FASTERInTransformSTToJavaTest >> testIfTrueBlockJavaInTransformation [
 	| ifStatementBlock |
-	search scope: (self methodNamed: #ifTrueMethod).
-	ifStatementBlock := search run.
+	fasterInstance scope: (self methodNamed: #ifTrueMethod).
+	ifStatementBlock := fasterInstance run.
 	self assert: ifStatementBlock size equals: 1
 ]

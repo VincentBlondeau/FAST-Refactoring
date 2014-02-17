@@ -17,10 +17,11 @@ FASTERInOutTransformSTToJavaTest >> fasterClass [
 FASTERInOutTransformSTToJavaTest >> testIfTrueBlockJavaInOutTransformation [
 	| ifTrueJavaCollection |
 
-	search scope: (self methodNamed: #ifTrueMethod).
+	fasterInstance scope: (self methodNamed: #ifTrueMethod).
 
-	ifTrueJavaCollection := search run.
+	ifTrueJavaCollection := fasterInstance run.
 	self assert: ifTrueJavaCollection isCollection.
+	self assert: ifTrueJavaCollection isNotEmpty.
 
 
 

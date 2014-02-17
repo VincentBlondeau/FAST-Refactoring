@@ -12,7 +12,7 @@ FASTERTrueIfTrueSearchTest >> fasterClass [
 { #category : #tests }
 FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearch [
 	| result |
-	result := search run.
+	result := fasterInstance run.
 	self assert: result isCollection.
 	self assert: result isNotEmpty.
 	self assert: (result inject: true into: [ :bool :each | bool and: [each selector name = #ifTrue: ] ])
@@ -21,7 +21,7 @@ FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearch [
 { #category : #tests }
 FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueMethod [
 	| result |
-	result := search scope: (self methodNamed: #trueIfTrueMethod); run.
+	result := fasterInstance scope: (self methodNamed: #trueIfTrueMethod); run.
 	self assert: result isCollection.
 	self assert: result size equals: 1.
 	self assert: (result inject: true into: [ :bool :each | bool and: [each selector name = #ifTrue: ] ])
@@ -30,7 +30,7 @@ FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueMethod [
 { #category : #tests }
 FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueNestedAndParallelMethod [
 	| result |
-	result := search
+	result := fasterInstance
 		scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod);
 		run.
 	self assert: result isCollection.
@@ -41,7 +41,7 @@ FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueNestedAndPara
 { #category : #tests }
 FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueNestedMethod [
 	| result |
-	result := search
+	result := fasterInstance
 		scope: (self methodNamed: #trueIfTrueNestedMethod);
 		run.
 	self assert: result isCollection.

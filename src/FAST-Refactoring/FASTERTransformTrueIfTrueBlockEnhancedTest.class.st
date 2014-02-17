@@ -25,7 +25,6 @@ FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockCascadeRemovalT
 { #category : #tests }
 FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockNestedAndParallelRemovalTransformation [
 	| result fasterTransform |
-	 (self methodNamed: #trueIfTrueNestedAndParallelMethod) display.
 	fasterTransform := FASTERTransformTrueIfTrueBlockEnhanced new scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod).
 	result := fasterTransform run.
 	
@@ -44,7 +43,6 @@ FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockNestedRemovalTr
 	| result fasterTransform |
 	fasterTransform := FASTERTransformTrueIfTrueBlockEnhanced new scope: (self methodNamed: #trueIfTrueNestedMethod).
 	result := fasterTransform run.
-	result display.
 	self
 		assert: result  print
 		equals:
