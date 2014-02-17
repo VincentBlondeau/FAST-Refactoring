@@ -55,7 +55,7 @@ FASTERTransform >> canApply: aMethodSelector on: aNode [
 	class := pragma argumentAt: 1.
 	pragma numArgs > 1
 		ifTrue: [ whereMethodSelector := (pragma argumentAt: 2) asMutator ].
-	^ (aNode isAKindOf: class)
+	^ (aNode isAKindOf: class asClass)
 		and: [ whereMethodSelector ifNotNil: [ self perform: whereMethodSelector with: aNode ] ifNil: [ true ] ]
 ]
 
@@ -86,4 +86,11 @@ FASTERTransform >> methodsWithTransformOnPragma [
 { #category : #private }
 FASTERTransform >> methodsWithTransformOnWherePragma [
 	^ (Pragma allNamed: #transformOn:Where: in: self class) collect: [ :pragma | pragma  method ] 
+]
+
+{ #category : #'as yet unclassified' }
+FASTERTransform >> run [
+	| transformationValue |
+	transformationValue := self entryPoint.
+	^ self result ifEmpty: [ transformationValue ]
 ]

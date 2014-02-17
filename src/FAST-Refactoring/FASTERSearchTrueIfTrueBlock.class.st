@@ -19,7 +19,7 @@ FASTERSearchTrueIfTrueBlock >> addIfTrueStatementToCollection: aNode [
 { #category : #'transformation - root' }
 FASTERSearchTrueIfTrueBlock >> entryPoint [
 	<search>
-	^ self apply: #transformTrueIfTrueFrom on: self scope fastNamedBehaviouralEntity
+	^ self apply: #searchInBehaviouralEntity on: self scope fastNamedBehaviouralEntity
 ]
 
 { #category : #'transformation - boolean' }

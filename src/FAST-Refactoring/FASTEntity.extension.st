@@ -47,13 +47,6 @@ FASTEntity >> is: aClass [
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> isAKindOf: requiredClass [
-	^ self class name = requiredClass or: [requiredClass asClass allSubclasses includes: self class ]
-
-
-]
-
-{ #category : #'*FAST-Refactoring-Core' }
 FASTEntity >> remove: anObject from: anAccessorReturningACollection [
 	| collection |
 	collection := self collectionFromAccessorNamed: anAccessorReturningACollection.

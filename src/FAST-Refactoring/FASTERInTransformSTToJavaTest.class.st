@@ -13,6 +13,7 @@ FASTERInTransformSTToJavaTest >> fasterClass [
 FASTERInTransformSTToJavaTest >> testIfTrueBlockJavaInTransformation [
 	| ifStatementBlock |
 	fasterInstance scope: (self methodNamed: #ifTrueMethod).
-	ifStatementBlock := fasterInstance run.
+	fasterInstance run.
+	ifStatementBlock := fasterInstance result.
 	self assert: ifStatementBlock size equals: 1
 ]

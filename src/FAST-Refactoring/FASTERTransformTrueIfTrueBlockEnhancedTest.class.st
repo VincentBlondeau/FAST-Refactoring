@@ -35,7 +35,7 @@ FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockNestedAndParall
 	self  foo1;  inlineMethod1;  bar1.
 	self m1.
 	self  bar2;  inlineMethod2;  foo2.
-	self m2'
+	self m2' 
 ]
 
 { #category : #tests }

@@ -15,7 +15,7 @@ Class {
 { #category : #transformation }
 FASTERTransformTrueIfTrueBlock >> searchTrueifTruePattern [
 	<search>
-	^ self find: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue:]
+	^ self findInScope: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue:]
 ]
 
 { #category : #transformation }

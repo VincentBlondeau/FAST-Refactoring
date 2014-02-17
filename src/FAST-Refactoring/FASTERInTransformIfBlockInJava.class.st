@@ -11,6 +11,12 @@ Class {
 }
 
 { #category : #transformation }
+FASTERInTransformIfBlockInJava >> entryPoint [
+	<search>
+	^ self findInScope: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue: ]
+]
+
+{ #category : #transformation }
 FASTERInTransformIfBlockInJava >> pharoFASTExpressionStatementToNewJavaExpressionStatement [
 	<transformOn: FASTExpressionStatement>
 	<in>
@@ -40,10 +46,4 @@ FASTERInTransformIfBlockInJava >> pharoIfTrueStatementToNewJavaIfStatement [
 	
 	"Don't forget to treat the block local variables "
 	^ ifJavaBlock
-]
-
-{ #category : #transformation }
-FASTERInTransformIfBlockInJava >> searchIfTrueMessage [
-	<search>
-	^ self find: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue: ]
 ]

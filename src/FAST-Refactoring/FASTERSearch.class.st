@@ -50,29 +50,49 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'model',
-		'scope'
+		'scope',
+		'result'
+	],
+	#classVars : [
+		'Value'
 	],
 	#category : #'FAST-Refactoring-Core'
 }
 
-{ #category : #'public  - searching' }
-FASTERSearch >> find: aSearchedClass [
-	^ self find: aSearchedClass where: [ :e | true ]
-]
-
-{ #category : #'public  - searching' }
-FASTERSearch >> find: aSearchedClass where: aBlock [
-	^ self findAll select: [ :element | element class = aSearchedClass and: [ aBlock value: element ] ]	"asFASTERCollection"
-]
-
-{ #category : #'public  - searching' }
-FASTERSearch >> findAll [
-	^ self scope deepCollect: [ :each | each childrenNodes ]
-]
-
 { #category : #private }
-FASTERSearch >> methodsWithSearchTag [
-	^ (Pragma allNamed: #search in: self class) collect: [ :pragma | pragma  method ] 
+FASTERSearch >> collectAllIn: aNode [
+	^ aNode deepCollect: [ :each | each childrenNodes ]
+]
+
+{ #category : #'public  - searching' }
+FASTERSearch >> find: aSearchedClass in: aNode [
+	^ self find: aSearchedClass in: aNode where: [ :e | true ]
+]
+
+{ #category : #'public  - searching' }
+FASTERSearch >> find: aSearchedClass in: aNode where: aBlock [
+	| foundElements |
+	foundElements := (self collectAllIn: aNode) select: [ :element | (element isAKindOf: aSearchedClass) and: [ aBlock value: element ] ].
+	"Mettre la cle sur la classe cherchée"
+	Value := Value + 1.
+	self result at: Value put: foundElements.
+	^ foundElements isNotEmpty
+]
+
+{ #category : #'public  - searching' }
+FASTERSearch >> findInScope: aSearchedClass [
+	^ self find: aSearchedClass in: self scope
+]
+
+{ #category : #'public  - searching' }
+FASTERSearch >> findInScope: aSearchedClass where: aBlock [
+	^ self find: aSearchedClass in: self scope where: aBlock
+]
+
+{ #category : #'public  - searching' }
+FASTERSearch >> initialize [
+	super initialize.
+	Value := 0.
 ]
 
 { #category : #accessing }
@@ -85,11 +105,15 @@ FASTERSearch >> model: anObject [
 	model := anObject
 ]
 
+{ #category : #accessing }
+FASTERSearch >> result [
+	^ result ifNil: [ result:= Dictionary new ]
+]
+
 { #category : #'public - processing' }
 FASTERSearch >> run [
-	| method |
-	method := self methodsWithSearchTag first.
-	^ self perform: method selector 
+	self entryPoint.
+	^ self result
 ]
 
 { #category : #accessing }
