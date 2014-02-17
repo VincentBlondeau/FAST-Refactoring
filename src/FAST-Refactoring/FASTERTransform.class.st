@@ -27,85 +27,63 @@ Class {
 	#category : #'FAST-Refactoring-Core'
 }
 
-{ #category : #private }
-FASTERTransform >> apply [
-	| transformations transformationMethod |
-	transformations := self methodsWithValidTransformation.
-	self checkApplicability: transformations.
-	transformations ifEmpty: [ ^ self defaultRule ] ifNotEmpty:  [ 
-	transformationMethod := transformations first method .
-	self changeTheThisIV: transformationMethod.
-	^ self perform: transformationMethod selector ]
+{ #category : #'public - processing' }
+FASTERTransform >> apply: aMethodSelector on: aNode [
+	|  children res |
+	self checkNodeTypeIsValid: aNode.
+	^ (self canApply: aMethodSelector on: aNode)
+		ifTrue: [ 
+			self perform: aMethodSelector asMutator with: aNode ]
+		ifFalse: [ |result| 
+			children := aNode childrenNodes.
+			result := OrderedCollection new.
+			children ifNotEmpty: [ (children
+						do: [ :each | 
+							res := self apply: aMethodSelector on: each.
+							res isCollection
+								ifTrue: [ result addAll: res ] 
+								ifFalse: [ result add: res ] ]) ].
+			^ result	
+					  ] 	"isCollection
+				ifTrue: [ FASTERTransformationReturnInvalid signal ] ]"
 ]
 
 { #category : #private }
-FASTERTransform >> changeTheThisIV: transformationMethod [
-	(transformationMethod hasPragmaNamed: #in) ifTrue: [ "self this: self this deepCopy" ]
-	"the deepCopy copy all the mooseModel -> not a good idea...."
-	
+FASTERTransform >> canApply: aMethodSelector on: aNode [
+	| pragma class whereMethodSelector |
+	pragma := self getPragmaFromSelector: aMethodSelector asMutator.
+	class := pragma argumentAt: 1.
+	pragma numArgs > 1
+		ifTrue: [ whereMethodSelector := (pragma argumentAt: 2) asMutator ].
+	^ (aNode isAKindOf: class)
+		and: [ whereMethodSelector ifNotNil: [ self perform: whereMethodSelector with: aNode ] ifNil: [ true ] ]
 ]
 
 { #category : #private }
-FASTERTransform >> checkApplicability: transformations [
-	transformations size > 1
-		ifTrue: [ FASTERSeveralTransformationsAppliables signalTransformationClass: self class fastClass: inNode class ].
-
-]
-
-{ #category : #accessing }
-FASTERTransform >> checkIsValidDirection: aSymbol [
-	| directionList |
-	directionList := #(in inout).
-	(directionList includes: aSymbol) ifFalse: [ FASTERTransformationDirectionNotProperlySet signal ].
-]
-
-{ #category : #'as yet unclassified' }
-FASTERTransform >> defaultRule [
-	^ inNode childrenNodes ifNotNil: [ (inNode childrenNodes --> self class) ]
-]
-
-{ #category : #'private - accessing' }
-FASTERTransform >> direction [
-	^ direction
-]
-
-{ #category : #'private - accessing' }
-FASTERTransform >> direction: aSymbol [
-	self checkIsValidDirection: aSymbol.
-	direction := aSymbol
-]
-
-{ #category : #accessing }
-FASTERTransform >> inNode [
-	^ inNode
-]
-
-{ #category : #'private - accessing' }
-FASTERTransform >> inNode: aMooseEntity [
-	inNode := aMooseEntity
+FASTERTransform >> checkNodeTypeIsValid: aNode [
+	aNode isCollection ifTrue: [ FASTERException signal ]
 ]
 
 { #category : #private }
-FASTERTransform >> methodsWithTransformOnTag [
+FASTERTransform >> getPragmaFromSelector: aSelector [
+	| method pragmas |
+	[ method := self class methodNamed: aSelector ]
+		on: KeyNotFound
+		do: [ FASTERTransformationsNotProperlySet signal ].
+	pragmas := {(Pragma inMethod: method named: #transformOn:).
+					(Pragma inMethod: method named: #transformOn:where:)} 
+						select: [ :p | p isNotNil ].
+	pragmas size ~= 1
+		ifTrue: [ FASTERTransformationsNotProperlySet signal ].
+	^ pragmas first
+]
+
+{ #category : #private }
+FASTERTransform >> methodsWithTransformOnPragma [
 	^ (Pragma allNamed: #transformOn: in: self class) collect: [ :pragma | pragma  method ] 
 ]
 
 { #category : #private }
-FASTERTransform >> methodsWithValidTransformation [
-	^ self methodsWithTransformOnTag select: [ :aCompiledMethod | self inNode isApplicableTransformation: aCompiledMethod ].
-]
-
-{ #category : #'public - processing' }
-FASTERTransform >> run [
-	^ super run --> self class
-]
-
-{ #category : #accessing }
-FASTERTransform >> transformationClass [
-	^ transformationClass
-]
-
-{ #category : #accessing }
-FASTERTransform >> transformationClass: aClass [
-	transformationClass := aClass 
+FASTERTransform >> methodsWithTransformOnWherePragma [
+	^ (Pragma allNamed: #transformOn:Where: in: self class) collect: [ :pragma | pragma  method ] 
 ]

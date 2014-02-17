@@ -10,6 +10,6 @@ FASTERTrueIfTrueSearch >> searchTrueifTruePattern [
 	^ self
 		find: FASTPharoMessageSend
 		where:
-			[ :a | a selector name = #ifTrue: and: [ (a concreteReceiver is: FASTBooleanLiteral) and: [ a concreteReceiver value = 'true' ] ] ]
+			[ :a | a selector name = #ifTrue: and: [ (a receiver is: FASTBooleanLiteral) and: [ a receiver value = 'true' ] ] ]
 				
 ]

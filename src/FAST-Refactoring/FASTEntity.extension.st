@@ -1,11 +1,6 @@
 Extension { #name : #FASTEntity }
 
 { #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> --> aTransformationMethodName [
-	^ self asOrderedCollection --> aTransformationMethodName
-]
-
-{ #category : #'*FAST-Refactoring-Core' }
 FASTEntity >> add: anObject after: anAfterObject in: anAccessorReturningACollection [
 	| collection |
 	collection := self collectionFromAccessorNamed: anAccessorReturningACollection.
@@ -40,12 +35,6 @@ FASTEntity >> checkIsPerfomableSelector: anAccessor [
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> classFilterValueFor: aCompiledMethod [
-	 ^ (Pragma inMethod: aCompiledMethod named: #transformOn:) arguments first
-
-]
-
-{ #category : #'*FAST-Refactoring-Core' }
 FASTEntity >> collectionFromAccessorNamed: anAccessorReturningACollection. [
 	self checkIsPerfomableSelector: anAccessorReturningACollection.
 	^self perform: anAccessorReturningACollection
@@ -58,12 +47,7 @@ FASTEntity >> is: aClass [
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> isApplicableTransformation: aCompiledMethod [
-	^ self isClassFilterValidIn: (self classFilterValueFor: aCompiledMethod)
-]
-
-{ #category : #'*FAST-Refactoring-Core' }
-FASTEntity >> isClassFilterValidIn: requiredClass [
+FASTEntity >> isAKindOf: requiredClass [
 	^ self class name = requiredClass or: [requiredClass asClass allSubclasses includes: self class ]
 
 

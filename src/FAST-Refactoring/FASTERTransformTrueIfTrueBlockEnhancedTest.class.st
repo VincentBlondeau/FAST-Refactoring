@@ -10,17 +10,47 @@ FASTERTransformTrueIfTrueBlockEnhancedTest >> fasterClass [
 ]
 
 { #category : #tests }
+FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockCascadeRemovalTransformation [
+	| result fasterTransform |
+	fasterTransform := FASTERTransformTrueIfTrueBlockEnhanced new scope: (self methodNamed: #trueIfTrueCascadeMethod).
+	result := fasterTransform run.
+	self
+		assert: result print
+		equals:
+			 'trueIfTrueNestedMethod
+	self  foo;  inlineMethod;  bar.
+	self'
+]
+
+{ #category : #tests }
 FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockNestedAndParallelRemovalTransformation [
 	| result fasterTransform |
+	 (self methodNamed: #trueIfTrueNestedAndParallelMethod) display.
 	fasterTransform := FASTERTransformTrueIfTrueBlockEnhanced new scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod).
 	result := fasterTransform run.
-	result first display.
-	result first print.
+	
 	self
-		assert: result first print
+		assert: result print
 		equals:
-			'trueIfTrueMethod
-	self  foo;  inlineMethod;  bar'
+			'trueIfTrueNestedAndParallelMethod
+	self  foo1;  inlineMethod1;  bar1.
+	self m1.
+	self  bar2;  inlineMethod2;  foo2.
+	self m2'
+]
+
+{ #category : #tests }
+FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockNestedRemovalTransformation [
+	| result fasterTransform |
+	fasterTransform := FASTERTransformTrueIfTrueBlockEnhanced new scope: (self methodNamed: #trueIfTrueNestedMethod).
+	result := fasterTransform run.
+	result display.
+	self
+		assert: result  print
+		equals:
+			 'trueIfTrueNestedMethod
+	self  foo;  inlineMethod;  bar.
+	self'
 ]
 
 { #category : #tests }
@@ -28,10 +58,9 @@ FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockRemovalTransfor
 	| result fasterTransform |
 	fasterTransform := FASTERTransformTrueIfTrueBlockEnhanced new scope: (self methodNamed: #trueIfTrueMethod).
 	result := fasterTransform run.
-	result first display.
-	"self
-		assert: result first print
+	self
+		assert: result print
 		equals:
 			'trueIfTrueMethod
-	self  foo;  inlineMethod;  bar'"
+	self  foo;  inlineMethod;  bar'
 ]

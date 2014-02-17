@@ -15,6 +15,11 @@ FMMultivalueLink >> add: newObject after: oldObject [
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
+FMMultivalueLink >> isSequencable [
+ ^ true
+]
+
+{ #category : #'*FAST-Refactoring-Core' }
 FMMultivalueLink >> reverseDo: aBlock [ 
 	"Override the superclass for performance reasons."
 	values reverseDo: aBlock

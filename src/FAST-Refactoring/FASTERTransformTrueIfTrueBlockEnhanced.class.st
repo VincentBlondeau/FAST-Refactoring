@@ -12,51 +12,42 @@ Class {
 	#category : #'FAST-Refactoring-Examples'
 }
 
-{ #category : #transformation }
+{ #category : #'transformation - root' }
 FASTERTransformTrueIfTrueBlockEnhanced >> entryPoint [
 	<search>
-	^ self scope fastNamedBehaviouralEntity 
+	^ self apply: #transformTrueIfTrueFrom on: self scope fastNamedBehaviouralEntity
 ]
 
-{ #category : #transformation }
-FASTERTransformTrueIfTrueBlockEnhanced >> flattenCollectionContaningDictionaries: aCollection [
-	"^ aCollection isSequenceable ifTrue: [  self flattenSequenceableCollection: (aCollection flatCollect: [ :e | e isSequenceable ifTrue: [ e ] ifFalse: [nil] ]) ] ifFalse: [ aCollection ]"
-	"aCollection deepCollect: [ :e | e ifNotNil: [ e isDictionary ifFalse: [ e contents ] ifTrue: [ ^e ]]]. ^ nil"
-	| result |
-	result := OrderedCollection new.
-	aCollection 
-		deep: [ :e | e ] 
-		do: [ :each | each isDictionary ifTrue: [ result add: each] ].
-	^ result
+{ #category : #'transformation - rules' }
+FASTERTransformTrueIfTrueBlockEnhanced >> getTrueIfTrueFrom: aNode [
+	<transformOn: #FASTPharoMessageSend where: #isAnIfTrueStatement>
+	| block |
+	block := aNode arguments first block.
+	self apply: #transformTrueIfTrueFrom on: block.
+	^ block
 ]
 
-{ #category : #transformation }
-FASTERTransformTrueIfTrueBlockEnhanced >> trueIfTrueTransformFASTBehaviouralEntity [
-	"should be FASTPharoMethodEntity or FASTPharoBlockDefinition"
+{ #category : #'transformation - boolean' }
+FASTERTransformTrueIfTrueBlockEnhanced >> isAnIfTrueStatement: aNode [
+	^ aNode selector name = #ifTrue:
+		and: [ (aNode receiver is: FASTBooleanLiteral) and: [ aNode receiver value = 'true' ] ]
+]
+
+{ #category : #'transformation - rules' }
+FASTERTransformTrueIfTrueBlockEnhanced >> transformTrueIfTrueFrom: aNode [
 	<transformOn: #FASTBehaviouralEntity>
-	inNode copy statements
-		do: [ :statementNode | | result  statements localVariables |
-			statementNode ifNotNil: [
-			result := self flattenCollectionContaningDictionaries: (statementNode --> self class).
-			result do: [ :aDictionary |
-			localVariables := aDictionary at: #localVariables.
-			statements := aDictionary at: #statements.	
-			"Affect the statements of the block to the upper BehaviouralEntity"
-			inNode add: statements insteadOf: statementNode in: #statements.
-			"Move the variables of the block to the upper BehaviouralEntity" 
-			inNode addLast: localVariables in: #localVariables ].
-		] ].
-		^ inNode
-]
-
-{ #category : #transformation }
-FASTERTransformTrueIfTrueBlockEnhanced >> trueIfTrueTransformFASTPharoMessageSend [
-	<transformOn: #FASTPharoMessageSend>
-	"<where: #isTrueMethod>"
-	(inNode selector name = #ifTrue:
-		and: [ (inNode receiver is: FASTBooleanLiteral) and: [ inNode receiver value = 'true' ] ])
-		ifTrue: [
-			^ {(#localVariables -> inNode arguments first block localVariables).
-			(#statements -> inNode arguments first block statements)} asDictionary.
-			 ] ifFalse: [ ^ self defaultRule ]
+	aNode statements copy
+		do: [ :statementNode | 
+			| behaviouralEntities statements localVariables |
+			"Get the data from a deaper entity"
+			behaviouralEntities := self apply: #getTrueIfTrueFrom on: statementNode.
+			behaviouralEntities do: [ :aBehaviouralEntity |
+					localVariables := aBehaviouralEntity localVariables.
+					statements := aBehaviouralEntity statements.	
+					"Affect the statements of the block to the upper BehaviouralEntity"
+					aNode add: statements insteadOf: statementNode in: #statements.	
+					"Move the variables of the block to the upper BehaviouralEntity"
+					aNode addLast: localVariables in: #localVariables ].
+			 ].
+	^ aNode
 ]
