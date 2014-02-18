@@ -6,7 +6,7 @@ Class {
 	#name : #FASTERDisplay,
 	#superclass : #Object,
 	#instVars : [
-		'fastEntity'
+		'collectionOfFastEntities'
 	],
 	#category : #'FAST-Displaying'
 }
@@ -17,9 +17,25 @@ FASTERDisplay class >> display: aFASTEntity [
 ]
 
 { #category : #display }
+FASTERDisplay class >> displayCollection: aCollectionOfFASTEntity [
+	self new displayCollection: aCollectionOfFASTEntity
+]
+
+{ #category : #accessing }
+FASTERDisplay >> collectionOfFastEntities [
+	^ collectionOfFastEntities
+]
+
+{ #category : #accessing }
+FASTERDisplay >> collectionOfFastEntities: aCollection [
+	collectionOfFastEntities := aCollection 
+]
+
+{ #category : #display }
 FASTERDisplay >> display [
 	| builder |
 	builder := ROMondrianViewBuilder new.
+	builder zoomInButton;zoomOutButton.
 	builder title: 'FAST Representation'.
 	builder interaction
 		noPopup;
@@ -50,23 +66,25 @@ FASTERDisplay >> display: anEntity [
 	
 ]
 
+{ #category : #display }
+FASTERDisplay >> displayCollection: aCollection [
+	self collectionOfFastEntities: aCollection.
+	self display
+	
+]
+
 { #category : #accessing }
 FASTERDisplay >> elements [
 	| elements |
-	elements := fastEntity deepCollect: [:each | each childrenNodes ].
-	elements := elements select: [ :e | e notNil and: [ e parentNode notNil ]].
-	elements add: fastEntity.
-	^ elements 
+	elements := collectionOfFastEntities flatCollect: [ :eachNode | eachNode deepCollect: [ :each | each childrenNodes ] ] as: OrderedCollection.
+	elements := elements select: [ :e | e notNil and: [ e parentNode notNil ] ].
+	"elements addAll: collectionOfFastEntities".
+	^ elements
 ]
 
 { #category : #accessing }
-FASTERDisplay >> fastEntity [
-	^ fastEntity
-]
-
-{ #category : #accessing }
-FASTERDisplay >> fastEntity: anObject [
-	fastEntity := anObject
+FASTERDisplay >> fastEntity: anFastEntity [
+	collectionOfFastEntities := OrderedCollection new add: anFastEntity ; yourself
 ]
 
 { #category : #display }
