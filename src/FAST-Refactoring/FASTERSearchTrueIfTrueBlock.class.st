@@ -5,7 +5,7 @@ A FASTERSearchTrueIfTrueBlock is an equivalent of FASTERTrueIfTrueSearch but usi
 Class {
 	#name : #FASTERSearchTrueIfTrueBlock,
 	#superclass : #FASTERTransform,
-	#category : #'FAST-Refactoring-Examples'
+	#category : #'FAST-Refactoring-Search-Examples'
 }
 
 { #category : #'transformation - rules' }
@@ -18,7 +18,6 @@ FASTERSearchTrueIfTrueBlock >> addIfTrueStatementToCollection: aNode [
 
 { #category : #'transformation - root' }
 FASTERSearchTrueIfTrueBlock >> entryPoint [
-	<search>
 	^ self apply: #searchInBehaviouralEntity on: self scope fastNamedBehaviouralEntity
 ]
 

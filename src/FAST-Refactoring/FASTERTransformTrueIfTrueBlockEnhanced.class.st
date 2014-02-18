@@ -9,7 +9,7 @@ The purpose is to remove a true ifTrue: [  ] expression.
 Class {
 	#name : #FASTERTransformTrueIfTrueBlockEnhanced,
 	#superclass : #FASTERTransform,
-	#category : #'FAST-Refactoring-Examples'
+	#category : #'FAST-Refactoring-Transformation-Examples'
 }
 
 { #category : #'transformation - root' }

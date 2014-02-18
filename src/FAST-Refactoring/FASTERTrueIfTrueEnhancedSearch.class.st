@@ -1,7 +1,7 @@
 Class {
 	#name : #FASTERTrueIfTrueEnhancedSearch,
 	#superclass : #FASTERSearch,
-	#category : #'FAST-Refactoring-Examples'
+	#category : #'FAST-Refactoring-Search-Examples'
 }
 
 { #category : #'transformation - root' }

@@ -7,12 +7,11 @@ The purpose is to convert a Smalltalk method to a Java one.
 Class {
 	#name : #FASTERInTransformIfBlockInJava,
 	#superclass : #FASTERTransform,
-	#category : #'FAST-Refactoring-Examples'
+	#category : #'FAST-Refactoring-Transformation-Examples'
 }
 
 { #category : #transformation }
 FASTERInTransformIfBlockInJava >> entryPoint [
-	<search>
 	^ self findInScope: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue: ]
 ]
 

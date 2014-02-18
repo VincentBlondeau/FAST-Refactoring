@@ -9,12 +9,11 @@ The purpose is to remove a true ifTrue: [  ] expression.
 Class {
 	#name : #FASTERTransformTrueIfTrueBlock,
 	#superclass : #FASTERTransform,
-	#category : #'FAST-Refactoring-Examples'
+	#category : #'FAST-Refactoring-Transformation-Examples'
 }
 
 { #category : #transformation }
-FASTERTransformTrueIfTrueBlock >> searchTrueifTruePattern [
-	<search>
+FASTERTransformTrueIfTrueBlock >> entryPoint [
 	^ self findInScope: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue:]
 ]
 
