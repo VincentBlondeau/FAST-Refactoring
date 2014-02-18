@@ -73,12 +73,12 @@ FASTERSearch >> find: aSearchedClass in: aNode where: aBlock [
 	foundElements := (self collectAllIn: aNode)
 		select: [ :element | 
 			(element isAKindOf: aSearchedClass)
-				and: [ 
-					level increment.
+				and: [  
+					level := level + 1.
 					res := aBlock value: element.
-					level decrement.
+					level := level - 1.
 					res ] ].	"Mettre la cle sur la classe cherchée"
-	foundElements ifNotEmpty: [ self  halt.(self result at: level ifAbsentPut: [ OrderedCollection new ]) addAllFirstUnlessAlreadyPresent: foundElements ].
+	foundElements ifNotEmpty: [ (self result at: level ifAbsentPut: [ OrderedCollection new ]) addAllFirstUnlessAlreadyPresent: foundElements ].
 	^ foundElements isNotEmpty
 ]
 
