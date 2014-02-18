@@ -8,10 +8,9 @@ Class {
 FASTERTrueIfTrueEnhancedSearch >> entryPoint [
 	self
 		findInScope: FASTBehaviouralEntity
-		where: [ :aNode |
+		where: [ :aNode | 
 			self
 				find: FASTPharoMessageSend
 				in: aNode
-				where: [ :eachSelector | 
-					eachSelector selector name = 'ifTrue:' ] ]
+				where: [ :eachSelector | self find: FASTPharoSelector in: eachSelector where: [ :s | s name = 'ifTrue:' ] ] ]
 ]

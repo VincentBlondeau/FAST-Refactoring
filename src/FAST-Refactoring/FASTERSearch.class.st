@@ -51,10 +51,8 @@ Class {
 	#instVars : [
 		'model',
 		'scope',
-		'result'
-	],
-	#classVars : [
-		'Value'
+		'result',
+		'level'
 	],
 	#category : #'FAST-Refactoring-Core'
 }
@@ -71,11 +69,16 @@ FASTERSearch >> find: aSearchedClass in: aNode [
 
 { #category : #'public  - searching' }
 FASTERSearch >> find: aSearchedClass in: aNode where: aBlock [
-	| foundElements |
-	foundElements := (self collectAllIn: aNode) select: [ :element | (element isAKindOf: aSearchedClass) and: [ aBlock value: element ] ].
-	"Mettre la cle sur la classe cherchée"
-	Value := Value + 1.
-	self result at: Value put: foundElements.
+	| foundElements res |
+	foundElements := (self collectAllIn: aNode)
+		select: [ :element | 
+			(element isAKindOf: aSearchedClass)
+				and: [ 
+					level increment.
+					res := aBlock value: element.
+					level decrement.
+					res ] ].	"Mettre la cle sur la classe cherchée"
+	foundElements ifNotEmpty: [ self  halt.(self result at: level ifAbsentPut: [ OrderedCollection new ]) addAllFirstUnlessAlreadyPresent: foundElements ].
 	^ foundElements isNotEmpty
 ]
 
@@ -92,7 +95,7 @@ FASTERSearch >> findInScope: aSearchedClass where: aBlock [
 { #category : #'public  - searching' }
 FASTERSearch >> initialize [
 	super initialize.
-	Value := 0.
+	level := 0.
 ]
 
 { #category : #accessing }
