@@ -9,6 +9,21 @@ Class {
 }
 
 { #category : #tests }
+FASTRefactoringPharoTestData >> doubleReturnMethod [
+	self
+		ifTrue: [ 
+			self
+				foo11;
+				foo12.
+			^ self bar1 ]
+		ifFalse: [ 
+			self
+				foo21;
+				foo22.
+			^ self bar2 ]
+]
+
+{ #category : #tests }
 FASTRefactoringPharoTestData >> ifTrueMethod [
 	| temp |
 	temp := true.
