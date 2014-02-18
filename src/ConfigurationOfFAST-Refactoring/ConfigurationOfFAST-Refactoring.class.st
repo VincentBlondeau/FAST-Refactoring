@@ -157,8 +157,10 @@ ConfigurationOfFAST-Refactoring >> baseline02: spec [
 			package: 'FAST-Refactoring-Tests-Data';
 			package: 'FAST-Displaying';
 			package: 'FAST-Refactoring' with: [
-				spec requires: #('FAST-Refactoring-Tests-Data' 'FAST-Displaying' ). ].
-		spec group: 'Main' with: #('FAST-Refactoring-Tests-Data' 'FAST-Displaying' 'FAST-Refactoring' ). ].
+				spec requires: #('FAST-Displaying' ). ];
+			package: 'FAST-Refactoring-Tests' with: [
+				spec requires: #('FAST-Refactoring-Tests-Data' 'FAST-Refactoring' ). ].
+		spec group: 'Main' with: #('FAST-Refactoring-Tests-Data' 'FAST-Displaying' 'FAST-Refactoring' 'FAST-Refactoring-Tests' ). ].
 
 ]
 
