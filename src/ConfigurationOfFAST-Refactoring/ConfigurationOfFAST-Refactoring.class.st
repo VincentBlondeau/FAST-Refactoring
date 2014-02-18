@@ -135,6 +135,33 @@ ConfigurationOfFAST-Refactoring >> baseline01: spec [
 
 ]
 
+{ #category : #baselines }
+ConfigurationOfFAST-Refactoring >> baseline02: spec [
+	<version: '0.2-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/VincentBlondeau/FAST-Refactoring/main/'.
+		spec 
+			project: 'FASTJava' with: [
+				spec
+					className: 'ConfigurationOfFASTJava';
+					versionString: #'stable';
+					repository: 'http://smalltalkhub.com/mc/Moose/FASTJava/main/' ];
+			project: 'FASTPharo' with: [
+				spec
+					className: 'ConfigurationOfFASTPharo';
+					versionString: #'stable';
+					repository: 'http://smalltalkhub.com/mc/Moose/FASTPharo/main/' ].
+		spec 
+			package: 'FAST-Refactoring-Tests-Data';
+			package: 'FAST-Displaying';
+			package: 'FAST-Refactoring' with: [
+				spec requires: #('FAST-Refactoring-Tests-Data' 'FAST-Displaying' ). ].
+		spec group: 'Main' with: #('FAST-Refactoring-Tests-Data' 'FAST-Displaying' 'FAST-Refactoring' ). ].
+
+]
+
 { #category : #accessing }
 ConfigurationOfFAST-Refactoring >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -147,7 +174,7 @@ ConfigurationOfFAST-Refactoring >> customProjectAttributes [
 ConfigurationOfFAST-Refactoring >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '0.1-baseline'. 
+	spec for: #'common' version: '0.2-baseline'.
 
 ]
 
@@ -162,4 +189,31 @@ ConfigurationOfFAST-Refactoring >> project [
 		(Smalltalk at: #MetacelloVersionConstructor) on: self project: project.
 		project loadType: #linear. "change to #atomic if desired"
 		project ]
+]
+
+{ #category : #'symbolic versions' }
+ConfigurationOfFAST-Refactoring >> stable: spec [
+	<symbolicVersion: #'stable'>
+
+	spec for: #'common' version: '0.1'.
+
+]
+
+{ #category : #versions }
+ConfigurationOfFAST-Refactoring >> version01: spec [
+	<version: '0.1' imports: #('0.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.1'.
+		spec author: 'VincentBlondeau'.
+		spec timestamp: '2/18/2014 16:23'.
+		spec 
+			project: 'FASTJava' with: #'stable';
+			project: 'FASTPharo' with: #'stable'.
+		spec 
+			package: 'FAST-Refactoring-Tests-Data' with: 'FAST-Refactoring-Tests-Data-VincentBlondeau.7';
+			package: 'FAST-Displaying' with: 'FAST-Displaying-VincentBlondeau.10';
+			package: 'FAST-Refactoring' with: 'FAST-Refactoring-VincentBlondeau.26'. ].
+
 ]
