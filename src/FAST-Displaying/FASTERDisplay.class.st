@@ -87,7 +87,7 @@ FASTERDisplay >> fastEntity: anFastEntity [
 	collectionOfFastEntities := OrderedCollection new add: anFastEntity ; yourself
 ]
 
-{ #category : #display }
+{ #category : #selecting }
 FASTERDisplay >> selectorFrom: aRootNode to: aSubNode [
 	| selectorCollection |
 	selectorCollection := self selectorsFromANode: aRootNode.
