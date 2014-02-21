@@ -4,12 +4,12 @@ Class {
 	#category : #'FAST-Refactoring-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FASTERTrueIfTrueEnhancedSearchTest >> fasterClass [
 	^ FASTERTrueIfTrueEnhancedSearch
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 FASTERTrueIfTrueEnhancedSearchTest >> testTrueIfTrueBlockEnhancedSearchInTrueIfTrueNestedAndParallelMethod [
 	| result |
 	result := fasterInstance
