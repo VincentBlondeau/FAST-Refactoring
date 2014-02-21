@@ -62,6 +62,11 @@ FASTERSearch >> collectAllIn: aNode [
 	^ aNode deepCollect: [ :each | each childrenNodes ]
 ]
 
+{ #category : #'public - processing' }
+FASTERSearch >> entryPoint [
+	self subclassResponsibility
+]
+
 { #category : #'public  - searching' }
 FASTERSearch >> find: aSearchedClass in: aNode [
 	^ self find: aSearchedClass in: aNode where: [ :e | true ]
@@ -77,18 +82,20 @@ FASTERSearch >> find: aSearchedClass in: aNode where: aBlock [
 					level := level + 1.
 					res := aBlock value: element.
 					level := level - 1.
-					res ] ].	"Mettre la cle sur la classe cherchée"
+					res ] ].	"Mettre la clé sur la classe cherchée"
 	foundElements ifNotEmpty: [ (self result at: level ifAbsentPut: [ OrderedCollection new ]) addAllFirstUnlessAlreadyPresent: foundElements ].
 	^ foundElements isNotEmpty
 ]
 
 { #category : #'public  - searching' }
 FASTERSearch >> findInScope: aSearchedClass [
+	self deprecated: 'Use find: aSearchedClass in: self scope instead'.
 	^ self find: aSearchedClass in: self scope
 ]
 
 { #category : #'public  - searching' }
 FASTERSearch >> findInScope: aSearchedClass where: aBlock [
+	self deprecated: 'Use find: aSearchedClass in: self scope where: aBlock instead'.
 	^ self find: aSearchedClass in: self scope where: aBlock
 ]
 

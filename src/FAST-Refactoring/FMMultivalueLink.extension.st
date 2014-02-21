@@ -4,18 +4,19 @@ Extension { #name : #FMMultivalueLink }
 FMMultivalueLink >> add: newObject after: oldObject [
 	"Add the argument, newObject, as an element of the receiver. Put it in 
 	the sequence just succeeding oldObject. Answer newObject."
+
 	"Same Method that in OrderedCollection"
 
 	| index |
 	index := values find: oldObject.
 	newObject perform: opposite with: owner.
-	(values includes: newObject) not
-		ifTrue: [ values insert: newObject before: index + 1 ].
+	(values includes: newObject)
+		ifFalse: [ values insert: newObject before: index + 1 ].
 	^ newObject
 ]
 
 { #category : #'*FAST-Refactoring-Core' }
-FMMultivalueLink >> isSequencable [
+FMMultivalueLink >> isSequenceable [
  ^ true
 ]
 

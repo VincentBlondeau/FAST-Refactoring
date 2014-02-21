@@ -7,8 +7,9 @@ Class {
 { #category : #'transformation - root' }
 FASTERTrueIfTrueEnhancedSearch >> entryPoint [
 	self
-		findInScope: FASTBehaviouralEntity
-		where: [ :aNode | 
+		find: FASTBehaviouralEntity
+		in: self scope
+		where: [ :aNode |
 			self
 				find: FASTPharoMessageSend
 				in: aNode
