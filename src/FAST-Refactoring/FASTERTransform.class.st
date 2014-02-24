@@ -55,7 +55,7 @@ FASTERTransform >> canApply: aMethodSelector on: aNode [
 	class := pragma argumentAt: 1.
 	pragma numArgs > 1
 		ifTrue: [ whereMethodSelector := (pragma argumentAt: 2) asMutator ].
-	^ (aNode isAKindOf: class asClass)
+	^ (aNode isKindOf: class asClass)
 		and: [ whereMethodSelector ifNotNil: [ self perform: whereMethodSelector with: aNode ] ifNil: [ true ] ]
 ]
 

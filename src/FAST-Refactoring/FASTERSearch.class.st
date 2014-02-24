@@ -1,23 +1,24 @@
 "
-A FASTERSearch is a abstract class allowing some search and transformation in a MooseModel.
+A FASTERSearch is a abstract class allowing some searches in a MooseModel.
 Obviously, before any search, the FAST model should be already generated.
 
+You can use this in any model if you have implemented the childrenNodes and  parentNode methods.
+
+If you want to know how to use it, open the help browser.
 
 Instance Variables
-	model:				a MooseModel 
-	this: 				a FASTEntity 
 	scope: 				a MooseEntity
-	
-model
-	-  the Moose Model where the search or the transformation should be applied
+	level : 				an Integer
+	result :  				an dictionary
+					
 scope
-	- the entity we search into to find the elements
-this - read only
-	-  object containing the Moose object where you can do the transformation
+	- the entity we search (deep) into to find the elements
+result 
+	-  containing the result of a search into a dictionary. 
+level 
+	- indicates in which level the FASTERSearch is when using the where block. Used  for creating the result
 
-
-
-
+An example : 
 
 | ""VI"" this ifPharoBlock ifJavaBlock statementsCollection localVariables |
 
@@ -59,11 +60,14 @@ Class {
 
 { #category : #private }
 FASTERSearch >> collectAllIn: aNode [
+	"Collect all the subNodes from a Node. Used for the search"
 	^ aNode deepCollect: [ :each | each childrenNodes ]
 ]
 
 { #category : #'public - processing' }
 FASTERSearch >> entryPoint [
+	"The entryPoint must be implemented for each transformation or search. It's the beginning.
+	If it's a transformation, this method must can the apply:on: method, else the transformation will be not executed."
 	self subclassResponsibility
 ]
 
@@ -74,45 +78,25 @@ FASTERSearch >> find: aSearchedClass in: aNode [
 
 { #category : #'public  - searching' }
 FASTERSearch >> find: aSearchedClass in: aNode where: aBlock [
+	"Find in all the subnodes of aNode, a node of the kind of aSearchedClass and whom the value of the block is true.
+	Return a dictionary"
 	| foundElements res |
 	foundElements := (self collectAllIn: aNode)
 		select: [ :element | 
-			(element isAKindOf: aSearchedClass)
+			(element isKindOf: aSearchedClass)
 				and: [  
 					level := level + 1.
 					res := aBlock value: element.
 					level := level - 1.
-					res ] ].	"Mettre la clé sur la classe cherchée"
+					res ] ].
 	foundElements ifNotEmpty: [ (self result at: level ifAbsentPut: [ OrderedCollection new ]) addAllFirstUnlessAlreadyPresent: foundElements ].
 	^ foundElements isNotEmpty
 ]
 
 { #category : #'public  - searching' }
-FASTERSearch >> findInScope: aSearchedClass [
-	self deprecated: 'Use find: aSearchedClass in: self scope instead'.
-	^ self find: aSearchedClass in: self scope
-]
-
-{ #category : #'public  - searching' }
-FASTERSearch >> findInScope: aSearchedClass where: aBlock [
-	self deprecated: 'Use find: aSearchedClass in: self scope where: aBlock instead'.
-	^ self find: aSearchedClass in: self scope where: aBlock
-]
-
-{ #category : #'public  - searching' }
 FASTERSearch >> initialize [
 	super initialize.
-	level := 0.
-]
-
-{ #category : #accessing }
-FASTERSearch >> model [
-	^ model
-]
-
-{ #category : #accessing }
-FASTERSearch >> model: anObject [
-	model := anObject
+	level := 0
 ]
 
 { #category : #accessing }
@@ -122,13 +106,14 @@ FASTERSearch >> result [
 
 { #category : #'public - processing' }
 FASTERSearch >> run [
+	"Have to be called to launch the search"
 	self entryPoint.
 	^ self result
 ]
 
 { #category : #accessing }
 FASTERSearch >> scope [ 
-	^ scope ifNil: [ self model allMethods ]
+	^ scope
 ]
 
 { #category : #accessing }

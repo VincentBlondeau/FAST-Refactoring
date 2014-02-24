@@ -7,6 +7,7 @@ Class {
 { #category : #'transformation - root' }
 FASTERTrueIfTrueSearch >> entryPoint [
 	self
-		findInScope: FASTPharoMessageSend
+		find: FASTPharoMessageSend
+		in: self scope
 		where: [ :a | a selector name = #ifTrue: and: [ (a receiver is: FASTBooleanLiteral) and: [ a receiver value = 'true' ] ] ]
 ]

@@ -1,11 +1,11 @@
 Class {
-	#name : #FASTERTrueIfTrueEnhancedSearch,
+	#name : #FASTERMultipleSearchWithoutNaming,
 	#superclass : #FASTERSearch,
 	#category : #'FAST-Refactoring-Search-Examples'
 }
 
 { #category : #'transformation - root' }
-FASTERTrueIfTrueEnhancedSearch >> entryPoint [
+FASTERMultipleSearchWithoutNaming >> entryPoint [
 	self
 		find: FASTBehaviouralEntity
 		in: self scope

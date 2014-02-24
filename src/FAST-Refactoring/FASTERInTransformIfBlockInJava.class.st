@@ -12,7 +12,7 @@ Class {
 
 { #category : #transformation }
 FASTERInTransformIfBlockInJava >> entryPoint [
-	^ self findInScope: FASTPharoMessageSend where: [ :a | a selector name = #ifTrue: ]
+	^ self find: FASTPharoMessageSend in: self scope where: [ :a | a selector name = #ifTrue: ]
 ]
 
 { #category : #transformation }
