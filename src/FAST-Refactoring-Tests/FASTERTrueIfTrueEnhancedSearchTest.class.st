@@ -6,7 +6,7 @@ Class {
 
 { #category : #accessing }
 FASTERTrueIfTrueEnhancedSearchTest >> fasterClass [
-	^ FASTERTrueIfTrueEnhancedSearch
+	^ FASTERMultipleSearchWithoutNaming
 ]
 
 { #category : #tests }
