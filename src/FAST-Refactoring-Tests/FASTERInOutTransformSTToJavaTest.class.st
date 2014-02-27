@@ -16,13 +16,8 @@ FASTERInOutTransformSTToJavaTest >> fasterClass [
 { #category : #tests }
 FASTERInOutTransformSTToJavaTest >> testIfTrueBlockJavaInOutTransformation [
 	| ifTrueJavaCollection |
-
 	fasterInstance scope: (self methodNamed: #ifTrueMethod).
-
 	ifTrueJavaCollection := fasterInstance run.
 	self assert: ifTrueJavaCollection isCollection.
-	self assert: ifTrueJavaCollection isNotEmpty.
-
-
-
+	self assert: ifTrueJavaCollection isNotEmpty
 ]

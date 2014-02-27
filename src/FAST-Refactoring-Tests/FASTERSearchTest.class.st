@@ -1,3 +1,13 @@
+"
+A FASTERSearchTest is an abstract class regrouping all the methods 
+
+Instance Variables
+	fasterInstance:		aFASTERSearch subclass
+
+fasterInstance
+	- it's a instance of the class returned by fasterClass which model IV is set to the model in Tests-Data. fasterClass must be implemented in all the subclasses an the fasterInstance used to  do the transformation or the search.
+
+"
 Class {
 	#name : #FASTERSearchTest,
 	#superclass : #FASTERTest,
@@ -15,6 +25,5 @@ FASTERSearchTest >> fasterClass [
 { #category : #running }
 FASTERSearchTest >> setUp [
 	super setUp.
-	fasterInstance := self fasterClass new
-		model: self model.
+	fasterInstance := self fasterClass new scope: model allMethods.
 ]

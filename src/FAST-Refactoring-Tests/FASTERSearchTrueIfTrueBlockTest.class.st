@@ -4,16 +4,15 @@ Class {
 	#category : #'FAST-Refactoring-Tests-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FASTERSearchTrueIfTrueBlockTest >> fasterClass [
 	^ FASTERSearchTrueIfTrueBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 FASTERSearchTrueIfTrueBlockTest >> testTrueIfTrueBlockNestedAndParallelSearch [
-	| result fasterTransform |
-	fasterTransform := FASTERSearchTrueIfTrueBlock new scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod).
-	result := fasterTransform run.
+	| result  |
+	result := fasterInstance scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod); run.
 	self assert: result isCollection.
 	self assert: result size equals: 4.
 

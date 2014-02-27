@@ -1,3 +1,13 @@
+"
+A FASTERTest is a super class containing few initialisation methods for FAST-Refactorings.
+
+Instance Variables
+	model:		aMooseModel
+
+model
+	- The model loaded from FAST-Refactoring-Tests-Data
+
+"
 Class {
 	#name : #FASTERTest,
 	#superclass : #TestCase,
@@ -9,9 +19,7 @@ Class {
 
 { #category : #generating }
 FASTERTest >> generateFASTOnModel: aModel [
-	aModel allMethods do: 
-		[:m | m fastNamedBehaviouralEntity ifNil: [m generateFAST]].
-	
+	aModel allMethods do: [ :m | m fastNamedBehaviouralEntity ifNil: [ m generateFAST ] ]
 ]
 
 { #category : #generating }
@@ -20,7 +28,7 @@ FASTERTest >> importModel [
 		importerClass: SmalltalkImporter;
 		model: model;
 		addFromPackageNamed: #'FAST-Refactoring-Tests-Data';
-		run.
+		run
 ]
 
 { #category : #accessing }

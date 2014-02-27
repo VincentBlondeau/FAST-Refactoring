@@ -1,3 +1,12 @@
+"
+A FASTERExtensionTest is a test class for the added methods in FASTEntity.
+
+See the help to see the use of them.
+
+Instance Variables : See setUp method
+	
+
+"
 Class {
 	#name : #FASTERExtensionTest,
 	#superclass : #FASTERTest,
@@ -29,7 +38,7 @@ FASTERExtensionTest >> setUp [
 
 { #category : #tests }
 FASTERExtensionTest >> testAddInAnInexsistantVariableShouldRaiseANotFoundException [
-	self should: [method addLast: entityNamedVariable in: #variablesLocales] raise: NotFound.
+	self should: [ method addLast: entityNamedVariable in: #variablesLocales ] raise: NotFound
 ]
 
 { #category : #tests }
@@ -64,12 +73,12 @@ FASTERExtensionTest >> testAddInShouldAddTwoFASTEntitiesInTheLocalVariableInstan
 
 { #category : #tests }
 FASTERExtensionTest >> testRemoveInAnInexsistantVariableShouldRaiseANotFoundException [
-	self should: [method remove: entity from: #variablesLocales] raise: NotFound.
+	self should: [ method remove: entityToRemoveOne from: #thisSelectorDoesntExists ] raise: NotFound
 ]
 
 { #category : #tests }
 FASTERExtensionTest >> testRemoveInCollectionWhichDoesntContainTheVariableShouldRaiseANotFoundException [
-	self should: [method remove: entityNamedVariable from: #localVariables] raise: NotFound.
+	self should: [ method remove: entityNamedVariable from: #localVariables ] raise: NotFound
 ]
 
 { #category : #tests }

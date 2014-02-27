@@ -1,3 +1,7 @@
+"
+A FASTERTransformTrueIfTrueBlockEnhancedTest is a class.
+
+"
 Class {
 	#name : #FASTERTransformTrueIfTrueBlockEnhancedTest,
 	#superclass : #FASTERTransformTest,
@@ -17,7 +21,20 @@ FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockCascadeRemovalT
 	self
 		assert: result print
 		equals:
-			 'trueIfTrueNestedMethod
+			'trueIfTrueNestedMethod
+	self  foo;  inlineMethod;  bar.
+	self'
+]
+
+{ #category : #tests }
+FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockCascadeRemovalTransformation1 [
+	| result fasterTransform |
+	fasterTransform := FASTERTransformTrueIfTrueBlockEnhanced new scope: (self methodNamed: #trueIfTrueCascadeMethod).
+	result := fasterTransform run.
+	self
+		assert: result print
+		equals:
+			'trueIfTrueNestedMethod
 	self  foo;  inlineMethod;  bar.
 	self'
 ]
