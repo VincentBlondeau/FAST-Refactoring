@@ -72,25 +72,42 @@ FASTERSearch >> entryPoint [
 ]
 
 { #category : #'public  - searching' }
+FASTERSearch >> find: aSearchedClass as: aSymbol in: aNode [
+	^ self find: aSearchedClass as: aSymbol in: aNode where: [ :e | true ]
+]
+
+{ #category : #'public  - searching' }
+FASTERSearch >> find: aSearchedClass as: aSymbol in: aNode where: aBlock [
+	"Find in all the subnodes of aNode, a node of the kind of aSearchedClass and whom the value of the block is true.
+	Return a dictionary"
+
+	| foundElements res |
+	foundElements := (self collectAllIn: aNode)
+		select: [ :element | 
+			(element isKindOf: aSearchedClass)
+				and: [ 
+					level := level + 1.
+					res := aBlock value: element.
+					level := level - 1.
+					res ] ].
+	foundElements
+		ifNotEmpty: [ 
+			(self result 
+				at: aSymbol 
+				ifAbsentPut: [ OrderedCollection new ]) 
+					addAllFirstUnlessAlreadyPresent: foundElements 
+			].
+	^ foundElements isNotEmpty
+]
+
+{ #category : #'public  - searching' }
 FASTERSearch >> find: aSearchedClass in: aNode [
 	^ self find: aSearchedClass in: aNode where: [ :e | true ]
 ]
 
 { #category : #'public  - searching' }
 FASTERSearch >> find: aSearchedClass in: aNode where: aBlock [
-	"Find in all the subnodes of aNode, a node of the kind of aSearchedClass and whom the value of the block is true.
-	Return a dictionary"
-	| foundElements res |
-	foundElements := (self collectAllIn: aNode)
-		select: [ :element | 
-			(element isKindOf: aSearchedClass)
-				and: [  
-					level := level + 1.
-					res := aBlock value: element.
-					level := level - 1.
-					res ] ].
-	foundElements ifNotEmpty: [ (self result at: level ifAbsentPut: [ OrderedCollection new ]) addAllFirstUnlessAlreadyPresent: foundElements ].
-	^ foundElements isNotEmpty
+	^ self find: aSearchedClass as: level in: aNode where: aBlock
 ]
 
 { #category : #'public  - searching' }
