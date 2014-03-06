@@ -45,6 +45,11 @@ FASTRefactoringPharoTestData >> inlineMethod [
 ]
 
 { #category : #tests }
+FASTRefactoringPharoTestData >> return1 [
+	true ifTrue: [ ^ 1 ]
+]
+
+{ #category : #tests }
 FASTRefactoringPharoTestData >> trueIfTrueCascadeMethod [
 	true
 		foo1;
@@ -109,6 +114,12 @@ FASTRefactoringPharoTestData >> trueIfTrueNestedTransformedMethod [
 		inlineMethod;
 		bar.
 		self
+]
+
+{ #category : #tests }
+FASTRefactoringPharoTestData >> trueIfTrueSimpleMethod [
+	true
+		ifTrue: [ ^ 1 ]
 ]
 
 { #category : #tests }
