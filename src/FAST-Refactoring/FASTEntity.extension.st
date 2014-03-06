@@ -60,6 +60,6 @@ FASTEntity >> updateOpposite: aSelector [
 	| collection |
 	"check if the annotations for the metamodel are correctly set. So if the parents nodes are set"
 	collection := self perform: aSelector.
-	collection do: [ :e | e parentNode ifNil: [ FASTERParentNodeNotSetByFAME signal ] ]
+	collection do: [ :e | e parentNode ifNil: [ FASTERParentNodeNotSet signal ] ]
 
 ]

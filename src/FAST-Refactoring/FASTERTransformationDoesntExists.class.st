@@ -1,6 +1,6 @@
 "
-A FASTERTransformationDoesntExists is  is risen when there are no transformation appliable on a model. 
-So you have to implement the method or change yours filters on your transformations.
+A FASTERTransformationDoesntExists is  is risen when the name you use for the transformation is not a selector.
+So you have to implement the method.
 
 "
 Class {
