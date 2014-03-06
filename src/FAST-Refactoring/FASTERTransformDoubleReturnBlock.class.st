@@ -7,7 +7,7 @@ Class {
 { #category : #'transformation - root' }
 FASTERTransformDoubleReturnBlock >> containsATwoArgumentsMessageSend: aNode [
 	"look if there is some two argument message send in children"
-	^ self halt.
+	^ self shouldBeImplemented .
 ]
 
 { #category : #'transformation - root' }
