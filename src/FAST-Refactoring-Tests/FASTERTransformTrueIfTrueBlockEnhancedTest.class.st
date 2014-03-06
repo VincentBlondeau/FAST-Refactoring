@@ -27,19 +27,6 @@ FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockCascadeRemovalT
 ]
 
 { #category : #tests }
-FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockCascadeRemovalTransformation1 [
-	| result fasterTransform |
-	fasterTransform := FASTERTransformTrueIfTrueBlockEnhanced new scope: (self methodNamed: #trueIfTrueCascadeMethod).
-	result := fasterTransform run.
-	self
-		assert: result print
-		equals:
-			'trueIfTrueNestedMethod
-	self  foo;  inlineMethod;  bar.
-	self'
-]
-
-{ #category : #tests }
 FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockNestedAndParallelRemovalTransformation [
 	| result fasterTransform |
 	fasterTransform := FASTERTransformTrueIfTrueBlockEnhanced new scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod).
@@ -78,4 +65,16 @@ FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueBlockRemovalTransfor
 		equals:
 			'trueIfTrueMethod
 	self  foo;  inlineMethod;  bar'
+]
+
+{ #category : #tests }
+FASTERTransformTrueIfTrueBlockEnhancedTest >> testTrueIfTrueSimpleBlockRemovalTransformation [
+	| result fasterTransform |
+	fasterTransform := FASTERTransformTrueIfTrueBlockEnhanced new scope: (self methodNamed: #return1).
+	result := fasterTransform run.
+	self
+		assert: result print
+		equals:
+			'return1
+	^ 1'
 ]
