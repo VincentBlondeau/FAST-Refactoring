@@ -1,5 +1,5 @@
 "
-A FASTRefactoringTestData is a Class regrouping data for tests. 
+A FASTRefactoringTestData is a Class regrouping data for tests for the refactoring tool
 
 "
 Class {
