@@ -114,7 +114,6 @@ FASTERTransform >> methodsWithTransformOnWherePragma [
 
 { #category : #'public - processing' }
 FASTERTransform >> run [
-	| transformationValue |
-	transformationValue := self entryPoint.
-	^ self result ifEmpty: [ transformationValue ]
+	^ self entryPoint.
+
 ]

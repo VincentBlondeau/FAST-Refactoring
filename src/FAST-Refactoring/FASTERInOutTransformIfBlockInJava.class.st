@@ -1,7 +1,10 @@
 "
 A FASTERTransformIfBlockInJava is a small example of a FAST transformation.
 
-The purpose is to convert a Smalltalk method to a Java one.
+The purpose is to convert a Smalltalk if statement to a Java one.
+The methods to transform the others parts of the method are not implemented.
+
+In this transformation, the FAST method model is modified
 
 "
 Class {
@@ -12,45 +15,32 @@ Class {
 
 { #category : #transformation }
 FASTERInOutTransformIfBlockInJava >> entryPoint [
-	^ self find: FASTPharoMessageSend in: self scope where: [ :a | a selector name = #ifTrue: ]
+	self find: FASTPharoMessageSend in: self scope where: [ :a | a selector name = #ifTrue: ].
+	^ self apply: #pharoIfTrueStatementToJavaIfStatement on: (result at: 0) first
 ]
 
 { #category : #transformation }
-FASTERInOutTransformIfBlockInJava >> pharoExpressionToJavaExpression [
+FASTERInOutTransformIfBlockInJava >> pharoExpressionToJavaExpression: aNode [
 	<transformOn: FASTExpression>
 	self flag: 'To implement'.
-	^ inNode
+	^ aNode
 ]
 
 { #category : #transformation }
-FASTERInOutTransformIfBlockInJava >> pharoIfTrueStatementToJavaIfStatement [
-	<transformOn: FASTPharoMessageSend>
-	<inout>	
+FASTERInOutTransformIfBlockInJava >> pharoIfTrueStatementToJavaIfStatement: aNode [
+	<transformOn: #FASTPharoMessageSend>
 	| ifJavaBlock fastStatementBlock |
-	
 	ifJavaBlock := FASTJavaIfStatement new.
-	
-	inNode parentNode parentNode add: ifJavaBlock insteadOf: inNode parentNode in:  #statements.
-	
-	ifJavaBlock condition: (inNode concreteReceiver --> FASTERInOutTransformIfBlockInJava).
-
-	
-	"Il faudra surement enlever le fast statement Block qui n'est plus utilisé en Smalltalk"
-	fastStatementBlock := FASTStatementBlock new statements: inNode arguments first block statements.
-	ifJavaBlock thenBody: (fastStatementBlock --> FASTERInOutTransformIfBlockInJava).
+	aNode parentNode parentNode add: ifJavaBlock insteadOf: aNode parentNode in: #statements.
+	ifJavaBlock condition: (self apply: #pharoExpressionToJavaExpression on: aNode concreteReceiver).
+	fastStatementBlock := FASTStatementBlock new statements: aNode arguments first block statements.
+	ifJavaBlock thenBody: (self apply: #pharoStatementBlockToJavaStatementBlock on: fastStatementBlock).
 	^ ifJavaBlock
 ]
 
 { #category : #transformation }
-FASTERInOutTransformIfBlockInJava >> pharoStatementBlockToJavaStatementBlock [
+FASTERInOutTransformIfBlockInJava >> pharoStatementBlockToJavaStatementBlock: aNode [
 	<transformOn: FASTStatementBlock>
 	self flag: 'To implement'.
-	^ inNode
-]
-
-{ #category : #transformation }
-FASTERInOutTransformIfBlockInJava >> pharoVariableExpressionToJavaExpression [
-	<transformOn: FASTVariableExpression>
-	self flag: 'To implement'.
-	^ inNode
+	^ aNode
 ]
