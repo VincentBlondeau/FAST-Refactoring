@@ -1,3 +1,8 @@
+"
+A FASTERInTransformSTToJavaTest is a test class for an smalltalk  ifTrue: block transformation  to a Java if(...) one.
+
+The transformation do a new FAST model
+"
 Class {
 	#name : #FASTERInTransformSTToJavaTest,
 	#superclass : #FASTERTransformTest,
@@ -13,7 +18,8 @@ FASTERInTransformSTToJavaTest >> fasterClass [
 FASTERInTransformSTToJavaTest >> testIfTrueBlockJavaInTransformation [
 	| ifStatementBlock |
 	fasterInstance scope: (self methodNamed: #ifTrueMethod).
-	fasterInstance run.
-	ifStatementBlock := fasterInstance result.
-	self assert: ifStatementBlock size equals: 1
+	
+	ifStatementBlock := fasterInstance run.
+	self assert: ifStatementBlock isCollection not.
+	self assert: (ifStatementBlock isKindOf: FASTJavaIfStatement)
 ]

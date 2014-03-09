@@ -1,5 +1,5 @@
 "
-A FASTERTransformTest is an class regrouping all the tests related to FASTERTransform.
+A FASTERTransformTest is an abstract class regrouping all the tests related to FASTERTransform.
 
 "
 Class {

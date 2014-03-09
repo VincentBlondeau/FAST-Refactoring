@@ -1,20 +1,20 @@
 "
-A FASTERTrueIfTrueEnhancedSearchTest is xxxxxxxxx.
+A FASTERTrueIfTrueMultipleSearchWithNamingTest is a filtering (search) test class with multiple filtering stacked. Each filtering result is named.
 
 "
 Class {
-	#name : #FASTERTrueIfTrueEnhancedSearchMultipleWithNamingTest,
+	#name : #FASTERTrueIfTrueMultipleSearchWithNamingTest,
 	#superclass : #FASTERSearchTest,
 	#category : #'FAST-Refactoring-Tests-Core'
 }
 
 { #category : #accessing }
-FASTERTrueIfTrueEnhancedSearchMultipleWithNamingTest >> fasterClass [
+FASTERTrueIfTrueMultipleSearchWithNamingTest >> fasterClass [
 	^ FASTERMultipleSearchWithNaming
 ]
 
 { #category : #tests }
-FASTERTrueIfTrueEnhancedSearchMultipleWithNamingTest >> testTrueIfTrueBlockEnhancedSearchInTrueIfTrueNestedAndParallelMethod [
+FASTERTrueIfTrueMultipleSearchWithNamingTest >> testTrueIfTrueBlockSearchInTrueIfTrueNestedAndParallelMethod [
 	| result |
 	result := fasterInstance
 		scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod);

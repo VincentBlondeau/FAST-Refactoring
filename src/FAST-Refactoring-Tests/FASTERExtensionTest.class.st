@@ -1,11 +1,5 @@
 "
-A FASTERExtensionTest is a test class for the added methods in FASTEntity.
-
-See the help to see the use of them.
-
-Instance Variables : See setUp method
-	
-
+A FASTERExtensionTest is a test class for the added methods in FASTEntity. The methods are mainly used for add nodes to another node collection 
 "
 Class {
 	#name : #FASTERExtensionTest,

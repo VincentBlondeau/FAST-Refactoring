@@ -1,18 +1,21 @@
+"
+A FASTERTrueIfTrueSimpleSearchTest is a simple filtering (search) test class.
+"
 Class {
-	#name : #FASTERTrueIfTrueSearchTest,
+	#name : #FASTERTrueIfTrueSimpleSearchTest,
 	#superclass : #FASTERSearchTest,
 	#category : #'FAST-Refactoring-Tests-Core'
 }
 
 { #category : #accessing }
-FASTERTrueIfTrueSearchTest >> fasterClass [
+FASTERTrueIfTrueSimpleSearchTest >> fasterClass [
 	^ FASTERTrueIfTrueSearch
 ]
 
 { #category : #tests }
-FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearch [
+FASTERTrueIfTrueSimpleSearchTest >> testTrueIfTrueBlockSearch [
 	| result |
-	result := fasterInstance run.
+	result := fasterInstance scope: self model allMethods; run.
 	self assert: result isDictionary.
 	self assert: result isNotEmpty.
 	self assert: (result at: 0) isNotEmpty.
@@ -20,7 +23,7 @@ FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearch [
 ]
 
 { #category : #tests }
-FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueMethod [
+FASTERTrueIfTrueSimpleSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueMethod [
 	| result |
 	result := fasterInstance scope: (self methodNamed: #trueIfTrueMethod); run.
 	self assert: result isDictionary.
@@ -29,7 +32,7 @@ FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueMethod [
 ]
 
 { #category : #tests }
-FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueNestedAndParallelMethod [
+FASTERTrueIfTrueSimpleSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueNestedAndParallelMethod [
 	| result |
 	result := fasterInstance
 		scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod);
@@ -40,7 +43,7 @@ FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueNestedAndPara
 ]
 
 { #category : #tests }
-FASTERTrueIfTrueSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueNestedMethod [
+FASTERTrueIfTrueSimpleSearchTest >> testTrueIfTrueBlockSearchInTrueIfTrueNestedMethod [
 	| result |
 	result := fasterInstance
 		scope: (self methodNamed: #trueIfTrueNestedMethod);

@@ -1,16 +1,19 @@
+"
+A FASTERTrueIfTrueMultipleSearchWithoutNamingTest is a filtering (search) test class with multiple filtering stacked. None filtering result is named.
+"
 Class {
-	#name : #FASTERTrueIfTrueEnhancedSearchTest,
+	#name : #FASTERTrueIfTrueMultipleSearchWithoutNamingTest,
 	#superclass : #FASTERSearchTest,
 	#category : #'FAST-Refactoring-Tests-Core'
 }
 
 { #category : #accessing }
-FASTERTrueIfTrueEnhancedSearchTest >> fasterClass [
+FASTERTrueIfTrueMultipleSearchWithoutNamingTest >> fasterClass [
 	^ FASTERMultipleSearchWithoutNaming
 ]
 
 { #category : #tests }
-FASTERTrueIfTrueEnhancedSearchTest >> testTrueIfTrueBlockEnhancedSearchInTrueIfTrueNestedAndParallelMethod [
+FASTERTrueIfTrueMultipleSearchWithoutNamingTest >> testTrueIfTrueBlockSearchInTrueIfTrueNestedAndParallelMethod [
 	| result |
 	result := fasterInstance
 		scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod);

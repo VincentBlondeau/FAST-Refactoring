@@ -1,5 +1,5 @@
 "
-A FASTERSearchTest is an abstract class regrouping all the methods 
+A FASTERSearchTest is an abstract class regrouping all the methods for testing the FAST-Refactoring tools
 
 Instance Variables
 	fasterInstance:		aFASTERSearch subclass
@@ -19,11 +19,12 @@ Class {
 
 { #category : #accessing }
 FASTERSearchTest >> fasterClass [
+	"Set the transformation class that has to be instancied to run the tests"
 	self subclassResponsibility 
 ]
 
 { #category : #running }
 FASTERSearchTest >> setUp [
 	super setUp.
-	fasterInstance := self fasterClass new scope: model allMethods.
+	fasterInstance := self fasterClass new
 ]

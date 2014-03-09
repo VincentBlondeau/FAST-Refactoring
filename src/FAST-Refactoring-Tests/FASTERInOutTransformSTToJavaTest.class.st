@@ -1,5 +1,7 @@
 "
-A FASTERInTransformSTToJavaTest is xxxxxxxxx.
+A FASTERInOutTransformSTToJavaTest is a test class for an smalltalk  ifTrue: block transformation  to a Java if(...) one.
+
+The transformation is done on the in FAST model
 
 "
 Class {
@@ -15,9 +17,10 @@ FASTERInOutTransformSTToJavaTest >> fasterClass [
 
 { #category : #tests }
 FASTERInOutTransformSTToJavaTest >> testIfTrueBlockJavaInOutTransformation [
-	| ifTrueJavaCollection |
+	| ifTrueJava |
 	fasterInstance scope: (self methodNamed: #ifTrueMethod).
-	ifTrueJavaCollection := fasterInstance run.
-	self assert: ifTrueJavaCollection isCollection.
-	self assert: ifTrueJavaCollection isNotEmpty
+	ifTrueJava := fasterInstance run.
+	self assert: ifTrueJava isCollection not.
+	self assert: (ifTrueJava isKindOf: FASTJavaIfStatement)
+	
 ]
