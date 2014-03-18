@@ -1,8 +1,8 @@
 "
 A FASTERTransformTrueIfTrueBlock is a small example of a FAST transformation.
 
-The purpose is to remove a true ifTrue: [  ] expression.
-
+The purpose is to remove a true ifTrue: [  ... ] expression.
+ 
 
 
 "
@@ -12,24 +12,41 @@ Class {
 	#category : #'FAST-Refactoring-Transformation-Examples'
 }
 
-{ #category : #transformation }
+{ #category : #'transformation - root' }
 FASTERTransformTrueIfTrueBlock >> entryPoint [
-	^ self find: FASTPharoMessageSend in: self scope where: [ :a | a selector name = #ifTrue:]
+	^ self apply: #transformTrueIfTrueFrom on: self scope fastNamedBehaviouralEntity
 ]
 
-{ #category : #transformation }
-FASTERTransformTrueIfTrueBlock >> trueifTrueInlineBlock [
-	<transformOn: FASTPharoMessageSend>
-	| statementsCollection localVariables behaviouralEntity |
-	behaviouralEntity := inNode parentNode parentNode .
-	
-	"Move the statements of the block to the upper BehaviouralEntity"
-	statementsCollection := inNode arguments first block statements.
-	behaviouralEntity add: statementsCollection insteadOf: inNode parentNode in: #statements.
-	
-	"Move the variables of the block to the upper BehaviouralEntity"
-	localVariables := inNode arguments first block localVariables.
-	behaviouralEntity addLast: localVariables in: #localVariables.
-	
-	^ behaviouralEntity
+{ #category : #'transformation - rules' }
+FASTERTransformTrueIfTrueBlock >> getTrueIfTrueFrom: aNode [
+	<transformOn: #FASTPharoMessageSend where: #isAnIfTrueStatement>
+	| block |
+	block := aNode arguments first block.
+	self apply: #transformTrueIfTrueFrom on: block.
+	^ block
+]
+
+{ #category : #'transformation - boolean' }
+FASTERTransformTrueIfTrueBlock >> isAnIfTrueStatement: aNode [
+	^ aNode selector name = #ifTrue:
+		and: [ (aNode receiver is: FASTBooleanLiteral) and: [ aNode receiver value = 'true' ] ]
+]
+
+{ #category : #'transformation - rules' }
+FASTERTransformTrueIfTrueBlock >> transformTrueIfTrueFrom: aNode [
+	<transformOn: #FASTBehaviouralEntity>
+	aNode statements copy
+		do: [ :statementNode | 
+			| behaviouralEntities statements localVariables |
+			"Get the data from a deaper entity"
+			behaviouralEntities := self apply: #getTrueIfTrueFrom on: statementNode.
+			behaviouralEntities do: [ :aBehaviouralEntity |
+					localVariables := aBehaviouralEntity localVariables.
+					statements := aBehaviouralEntity statements.	
+					"Affect the statements of the block to the upper BehaviouralEntity"
+					aNode add: statements insteadOf: statementNode in: #statements.	
+					"Move the variables of the block to the upper BehaviouralEntity"
+					aNode addLast: localVariables in: #localVariables ].
+			 ].
+	^ aNode
 ]

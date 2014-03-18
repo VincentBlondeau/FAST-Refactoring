@@ -23,7 +23,7 @@ FASTERTransformDoubleReturnBlock >> getReturnStatementsFrom: aNode [
 
 { #category : #'transformation - root' }
 FASTERTransformDoubleReturnBlock >> hasTwoArgumentsWhichAreBlocks: aNode [
-	^ aNode arguments size = 2 halt.
+	^ self shouldBeImplemented.
 ]
 
 { #category : #'transformation - root' }
