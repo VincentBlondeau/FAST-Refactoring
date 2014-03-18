@@ -145,13 +145,13 @@ ConfigurationOfFAST-Refactoring >> baseline02: spec [
 		spec 
 			project: 'FASTJava' with: [
 				spec
-					className: 'ConfigurationOfFASTJava';
-					versionString: #'stable';
+					className: #ConfigurationOfFASTJava;
+					versionString: 'stable';
 					repository: 'http://smalltalkhub.com/mc/Moose/FASTJava/main/' ];
 			project: 'FASTPharo' with: [
 				spec
-					className: 'ConfigurationOfFASTPharo';
-					versionString: #'stable';
+					className: #ConfigurationOfFASTPharo;
+					versionString: 'stable';
 					repository: 'http://smalltalkhub.com/mc/Moose/FASTPharo/main/' ].
 		spec 
 			package: 'FAST-Refactoring-Tests-Data';
@@ -197,7 +197,7 @@ ConfigurationOfFAST-Refactoring >> project [
 ConfigurationOfFAST-Refactoring >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '0.1'.
+	spec for: #'common' version: '0.2'.
 
 ]
 
@@ -217,5 +217,25 @@ ConfigurationOfFAST-Refactoring >> version01: spec [
 			package: 'FAST-Refactoring-Tests-Data' with: 'FAST-Refactoring-Tests-Data-VincentBlondeau.7';
 			package: 'FAST-Displaying' with: 'FAST-Displaying-VincentBlondeau.10';
 			package: 'FAST-Refactoring' with: 'FAST-Refactoring-VincentBlondeau.26'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfFAST-Refactoring >> version02: spec [
+	<version: '0.2' imports: #('0.2-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.2'.
+		spec author: 'VincentBlondeau'.
+		spec timestamp: '3/18/2014 11:05'.
+		spec 
+			project: 'FASTJava' with: #'stable';
+			project: 'FASTPharo' with: #'stable'.
+		spec 
+			package: 'FAST-Refactoring-Tests-Data' with: 'FAST-Refactoring-Tests-Data-VincentBlondeau.10';
+			package: 'FAST-Displaying' with: 'FAST-Displaying-VincentBlondeau.13';
+			package: 'FAST-Refactoring' with: 'FAST-Refactoring-VincentBlondeau.37';
+			package: 'FAST-Refactoring-Tests' with: 'FAST-Refactoring-Tests-VincentBlondeau.8'. ].
 
 ]
