@@ -17,7 +17,7 @@ FASTERTransformTrueIfTrueBlockTest >> fasterClass [
 { #category : #tests }
 FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueBlockCascadeRemovalTransformation [
 	| result fasterTransform |
-	fasterTransform := FASTERTransformTrueIfTrueBlock new scope: (self methodNamed: #trueIfTrueCascadeMethod).
+	fasterTransform := fasterInstance scope: (self methodNamed: #trueIfTrueCascadeMethod).
 	result := fasterTransform run.
 	self
 		assert: result print
@@ -30,7 +30,7 @@ FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueBlockCascadeRemovalTransform
 { #category : #tests }
 FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueBlockNestedAndParallelRemovalTransformation [
 	| result fasterTransform |
-	fasterTransform := FASTERTransformTrueIfTrueBlock new scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod).
+	fasterTransform := fasterInstance scope: (self methodNamed: #trueIfTrueNestedAndParallelMethod).
 	result := fasterTransform run.
 	
 	self
@@ -46,7 +46,7 @@ FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueBlockNestedAndParallelRemova
 { #category : #tests }
 FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueBlockNestedRemovalTransformation [
 	| result fasterTransform |
-	fasterTransform := FASTERTransformTrueIfTrueBlock new scope: (self methodNamed: #trueIfTrueNestedMethod).
+	fasterTransform := fasterInstance scope: (self methodNamed: #trueIfTrueNestedMethod).
 	result := fasterTransform run.
 	self
 		assert: result  print
@@ -59,7 +59,7 @@ FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueBlockNestedRemovalTransforma
 { #category : #tests }
 FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueBlockRemovalTransformation [
 	| result fasterTransform |
-	fasterTransform := FASTERTransformTrueIfTrueBlock new scope: (self methodNamed: #trueIfTrueMethod).
+	fasterTransform := fasterInstance scope: (self methodNamed: #trueIfTrueMethod).
 	result := fasterTransform run.
 	self
 		assert: result print
@@ -71,7 +71,7 @@ FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueBlockRemovalTransformation [
 { #category : #tests }
 FASTERTransformTrueIfTrueBlockTest >> testTrueIfTrueSimpleBlockRemovalTransformation [
 	| result fasterTransform |
-	fasterTransform := FASTERTransformTrueIfTrueBlock new scope: (self methodNamed: #return1).
+	fasterTransform := fasterInstance scope: (self methodNamed: #return1).
 	result := fasterTransform run.
 	self
 		assert: result print

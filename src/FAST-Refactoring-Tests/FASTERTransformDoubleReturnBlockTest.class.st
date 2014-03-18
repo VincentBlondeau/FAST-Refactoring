@@ -29,7 +29,7 @@ FASTERTransformDoubleReturnBlockTest >> fasterClass [
 { #category : #tests }
 FASTERTransformDoubleReturnBlockTest >> testDoubleReturnRemovalTransformation [
 	| result fasterTransform |
-	fasterTransform := FASTERTransformDoubleReturnBlock new scope: (self methodNamed: #doubleReturnMethod).
+	fasterTransform := fasterInstance scope: (self methodNamed: #doubleReturnMethod).
 	result := fasterTransform run.
 	self
 		assert: result 
