@@ -19,7 +19,7 @@ Class {
 
 { #category : #generating }
 FASTERTest >> generateFASTOnModel: aModel [
-	aModel allMethods do: [ :m | m fastNamedBehaviouralEntity ifNil: [ m generateFAST ] ]
+	aModel allMethods do: [ :m | m fastBehaviouralEntity ifNil: [ m generateFAST ] ]
 ]
 
 { #category : #generating }
