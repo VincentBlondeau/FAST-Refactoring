@@ -146,12 +146,12 @@ ConfigurationOfFAST-Refactoring >> baseline02: spec [
 			project: 'FASTJava' with: [
 				spec
 					className: #ConfigurationOfFASTJava;
-					versionString: 'stable';
+					versionString: #'development';
 					repository: 'http://smalltalkhub.com/mc/Moose/FASTJava/main/' ];
 			project: 'FASTPharo' with: [
 				spec
 					className: #ConfigurationOfFASTPharo;
-					versionString: 'stable';
+					versionString: #'development';
 					repository: 'http://smalltalkhub.com/mc/Moose/FASTPharo/main/' ].
 		spec 
 			package: 'FAST-Refactoring-Tests-Data';
