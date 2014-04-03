@@ -14,7 +14,7 @@ Class {
 
 { #category : #'transformation - root' }
 FASTERTransformTrueIfTrueBlock >> entryPoint [
-	^ self apply: #transformTrueIfTrueFrom on: self scope fastNamedBehaviouralEntity
+	^ self apply: #transformTrueIfTrueFrom on: self scope fastBehaviouralEntity
 ]
 
 { #category : #'transformation - rules' }
