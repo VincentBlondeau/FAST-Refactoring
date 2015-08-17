@@ -164,6 +164,39 @@ ConfigurationOfFAST-Refactoring >> baseline02: spec [
 
 ]
 
+{ #category : #baselines }
+ConfigurationOfFAST-Refactoring >> baseline03: spec [
+	<version: '0.3-baseline'>
+	spec
+		for: #common
+		do: [ 
+			spec blessing: #baseline.
+			spec repository: 'http://smalltalkhub.com/mc/VincentBlondeau/FAST-Refactoring/main/'.
+			spec
+				project: 'FASTJava'
+					with: [ 
+							spec
+								className: #ConfigurationOfFASTJava;
+								versionString: #development;
+								repository: 'http://smalltalkhub.com/mc/Moose/FASTJava/main/' ];
+				project: 'FASTPharo'
+					with: [ 
+							spec
+								className: #ConfigurationOfFASTPharo;
+								versionString: #development;
+								repository: 'http://smalltalkhub.com/mc/Moose/FASTPharo/main/' ].
+			spec
+				package: 'FAST-Refactoring-Tests-Data';
+				package: 'FAST-Displaying';
+				package: 'FAST-Refactoring' with: [ spec requires: #('FAST-Displaying') ];
+				package: 'FAST-Refactoring-Tests'
+					with: [ spec requires: #('FAST-Refactoring-Tests-Data' 'FAST-Refactoring' 'FASTJava' 'FASTPharo') ].
+			spec
+				group: 'default' with: #('Core');
+				group: 'Core' with: #('FAST-Displaying' 'FAST-Refactoring');
+				group: 'Tests' with: #('FAST-Refactoring-Tests' 'FAST-Refactoring-Tests-Data') ]
+]
+
 { #category : #accessing }
 ConfigurationOfFAST-Refactoring >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -176,7 +209,7 @@ ConfigurationOfFAST-Refactoring >> customProjectAttributes [
 ConfigurationOfFAST-Refactoring >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '0.2-baseline'.
+	spec for: #'common' version: '0.3-baseline'.
 
 ]
 
@@ -197,7 +230,7 @@ ConfigurationOfFAST-Refactoring >> project [
 ConfigurationOfFAST-Refactoring >> stable: spec [
 	<symbolicVersion: #'stable'>
 
-	spec for: #'common' version: '0.2'.
+	spec for: #'common' version: '0.3'.
 
 ]
 
@@ -237,5 +270,25 @@ ConfigurationOfFAST-Refactoring >> version02: spec [
 			package: 'FAST-Displaying' with: 'FAST-Displaying-VincentBlondeau.13';
 			package: 'FAST-Refactoring' with: 'FAST-Refactoring-VincentBlondeau.37';
 			package: 'FAST-Refactoring-Tests' with: 'FAST-Refactoring-Tests-VincentBlondeau.8'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfFAST-Refactoring >> version03: spec [
+	<version: '0.3' imports: #('0.3-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.3'.
+		spec author: 'VincentBlondeau'.
+		spec timestamp: '8/17/2015 15:37'.
+		spec 
+			project: 'FASTJava' with: '1.0-baseline';
+			project: 'FASTPharo' with: '1.0-baseline'.
+		spec 
+			package: 'FAST-Refactoring-Tests-Data' with: 'FAST-Refactoring-Tests-Data-VincentBlondeau.10';
+			package: 'FAST-Displaying' with: 'FAST-Displaying-VincentBlondeau.14';
+			package: 'FAST-Refactoring' with: 'FAST-Refactoring-VincentBlondeau.38';
+			package: 'FAST-Refactoring-Tests' with: 'FAST-Refactoring-Tests-VincentBlondeau.9'. ].
 
 ]
