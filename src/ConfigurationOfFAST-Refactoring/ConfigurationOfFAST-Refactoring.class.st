@@ -197,6 +197,43 @@ ConfigurationOfFAST-Refactoring >> baseline03: spec [
 				group: 'Tests' with: #('FAST-Refactoring-Tests' 'FAST-Refactoring-Tests-Data') ]
 ]
 
+{ #category : #baselines }
+ConfigurationOfFAST-Refactoring >> baseline04: spec [
+	<version: '0.4-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/VincentBlondeau/FAST-Refactoring/main/'.
+		spec 
+			project: 'FASTJava' with: [
+				spec
+					className: #ConfigurationOfFASTJava;
+					versionString: #'development';
+					repository: 'http://smalltalkhub.com/mc/Moose/FASTJava/main/' ];
+			project: 'FASTPharo' with: [
+				spec
+					className: #ConfigurationOfFASTPharo;
+					versionString: #'development';
+					repository: 'http://smalltalkhub.com/mc/Moose/FASTPharo/main/' ];
+			project: 'FASTCore' with: [
+				spec
+					className: #ConfigurationOfFASTCore;
+					versionString: #'development';
+					repository: 'http://smalltalkhub.com/mc/Moose/FASTCore/main/' ].
+		spec 
+			package: 'FAST-Refactoring-Tests-Data';
+			package: 'FAST-Displaying';
+			package: 'FAST-Refactoring' with: [
+				spec requires: #('FAST-Displaying' 'FASTCore' ). ];
+			package: 'FAST-Refactoring-Tests' with: [
+				spec requires: #('FAST-Refactoring-Tests-Data' 'FAST-Refactoring' 'FASTJava' 'FASTPharo' ). ].
+		spec 
+			group: 'default' with: #('Core' );
+			group: 'Core' with: #('FAST-Displaying' 'FAST-Refactoring' );
+			group: 'Tests' with: #('FAST-Refactoring-Tests' 'FAST-Refactoring-Tests-Data' ). ].
+
+]
+
 { #category : #accessing }
 ConfigurationOfFAST-Refactoring >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
@@ -209,7 +246,7 @@ ConfigurationOfFAST-Refactoring >> customProjectAttributes [
 ConfigurationOfFAST-Refactoring >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '0.3-baseline'.
+	spec for: #'common' version: '0.4-baseline'.
 
 ]
 
