@@ -23,7 +23,6 @@ Class {
 	#name : #FASTERSearch,
 	#superclass : #Object,
 	#instVars : [
-		'model',
 		'scope',
 		'result',
 		'level'
