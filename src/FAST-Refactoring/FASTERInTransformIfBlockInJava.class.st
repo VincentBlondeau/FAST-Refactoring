@@ -21,21 +21,21 @@ FASTERInTransformIfBlockInJava >> entryPoint [
 
 { #category : #transformation }
 FASTERInTransformIfBlockInJava >> pharoFASTExpressionStatementToNewJavaExpressionStatement: aNode [
-	<transformOn: FASTExpressionStatement>
+	<transformOn: #FASTExpressionStatement>
 	self flag: 'To implement'.
 	^ FASTExpressionStatement new
 ]
 
 { #category : #transformation }
 FASTERInTransformIfBlockInJava >> pharoFASTVariableExpressionToNewJavaVariableExpression: aNode [
-	<transformOn: FASTVariableExpression>
+	<transformOn: #FASTVariableExpression>
 	self flag: 'To implement'.
 	^ FASTJavaVarDeclStatement new
 ]
 
 { #category : #transformation }
 FASTERInTransformIfBlockInJava >> pharoIfTrueStatementToNewJavaIfStatement: aNode [
-	<transformOn: FASTPharoMessageSend>
+	<transformOn: #FASTPharoMessageSend>
 	"For this example , we suppose that the JavaIfStatement is the root of the FAST model"
 	| ifJavaBlock  |
 	ifJavaBlock := FASTJavaIfStatement new.

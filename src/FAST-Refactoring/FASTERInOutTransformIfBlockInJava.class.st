@@ -21,7 +21,7 @@ FASTERInOutTransformIfBlockInJava >> entryPoint [
 
 { #category : #transformation }
 FASTERInOutTransformIfBlockInJava >> pharoExpressionToJavaExpression: aNode [
-	<transformOn: FASTExpression>
+	<transformOn: #FASTExpression>
 	self flag: 'To implement'.
 	^ aNode
 ]
@@ -40,7 +40,7 @@ FASTERInOutTransformIfBlockInJava >> pharoIfTrueStatementToJavaIfStatement: aNod
 
 { #category : #transformation }
 FASTERInOutTransformIfBlockInJava >> pharoStatementBlockToJavaStatementBlock: aNode [
-	<transformOn: FASTStatementBlock>
+	<transformOn: #FASTStatementBlock>
 	self flag: 'To implement'.
 	^ aNode
 ]

@@ -19,7 +19,7 @@ FASTERTransformTrueIfTrueBlockBadImplementation >> entryPoint [
 
 { #category : #transformation }
 FASTERTransformTrueIfTrueBlockBadImplementation >> trueifTrueInlineBlock: aNode [
-	<transformOn: FASTPharoMessageSend>
+	<transformOn: #FASTPharoMessageSend>
 	| statementsCollection localVariables behaviouralEntity |
 	behaviouralEntity := aNode parentNode parentNode .
 	
