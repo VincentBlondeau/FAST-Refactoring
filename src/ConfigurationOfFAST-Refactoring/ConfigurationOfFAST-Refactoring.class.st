@@ -329,3 +329,24 @@ ConfigurationOfFAST-Refactoring >> version03: spec [
 			package: 'FAST-Refactoring-Tests' with: 'FAST-Refactoring-Tests-VincentBlondeau.9'. ].
 
 ]
+
+{ #category : #versions }
+ConfigurationOfFAST-Refactoring >> version04: spec [
+	<version: '0.4' imports: #('0.4-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.4 - Valid with Moose 6.1'.
+		spec author: 'CYrilFerlicot'.
+		spec timestamp: '3/13/2017 11:37'.
+		spec 
+			project: 'FASTJava' with: '1.0-baseline';
+			project: 'FASTPharo' with: '1.0-baseline';
+			project: 'FASTCore' with: '0.5'.
+		spec 
+			package: 'FAST-Refactoring-Tests-Data' with: 'FAST-Refactoring-Tests-Data-VincentBlondeau.10';
+			package: 'FAST-Displaying' with: 'FAST-Displaying-VincentBlondeau.14';
+			package: 'FAST-Refactoring' with: 'FAST-Refactoring-CyrilFerlicot.40';
+			package: 'FAST-Refactoring-Tests' with: 'FAST-Refactoring-Tests-VincentBlondeau.9'. ].
+
+]
