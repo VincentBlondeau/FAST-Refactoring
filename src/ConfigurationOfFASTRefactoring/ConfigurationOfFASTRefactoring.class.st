@@ -4,9 +4,6 @@ Class {
 	#instVars : [
 		'project'
 	],
-	#classVars : [
-		'LastVersionLoad'
-	],
 	#category : #ConfigurationOfFASTRefactoring
 }
 
@@ -114,6 +111,7 @@ ConfigurationOfFASTRefactoring >> baseline01: spec [
 
 	spec for: #'common' do: [
 		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/VincentBlondeau/FAST-Refactoring/main/'.
 		spec 
 			project: 'FASTJava' with: [
 				spec
@@ -134,19 +132,118 @@ ConfigurationOfFASTRefactoring >> baseline01: spec [
 
 ]
 
+{ #category : #baselines }
+ConfigurationOfFASTRefactoring >> baseline02: spec [
+	<version: '0.2-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/VincentBlondeau/FAST-Refactoring/main/'.
+		spec 
+			project: 'FASTJava' with: [
+				spec
+					className: #ConfigurationOfFASTJava;
+					versionString: #'development';
+					repository: 'http://smalltalkhub.com/mc/Moose/FASTJava/main/' ];
+			project: 'FASTPharo' with: [
+				spec
+					className: #ConfigurationOfFASTPharo;
+					versionString: #'development';
+					repository: 'http://smalltalkhub.com/mc/Moose/FASTPharo/main/' ].
+		spec 
+			package: 'FAST-Refactoring-Tests-Data';
+			package: 'FAST-Displaying';
+			package: 'FAST-Refactoring' with: [
+				spec requires: #('FAST-Displaying' ). ];
+			package: 'FAST-Refactoring-Tests' with: [
+				spec requires: #('FAST-Refactoring-Tests-Data' 'FAST-Refactoring' ). ].
+		spec group: 'Main' with: #('FAST-Refactoring-Tests-Data' 'FAST-Displaying' 'FAST-Refactoring' 'FAST-Refactoring-Tests' ). ].
+
+]
+
+{ #category : #baselines }
+ConfigurationOfFASTRefactoring >> baseline03: spec [
+	<version: '0.3-baseline'>
+	spec
+		for: #common
+		do: [ 
+			spec blessing: #baseline.
+			spec repository: 'http://smalltalkhub.com/mc/VincentBlondeau/FAST-Refactoring/main/'.
+			spec
+				project: 'FASTJava'
+					with: [ 
+							spec
+								className: #ConfigurationOfFASTJava;
+								versionString: #development;
+								repository: 'http://smalltalkhub.com/mc/Moose/FASTJava/main/' ];
+				project: 'FASTPharo'
+					with: [ 
+							spec
+								className: #ConfigurationOfFASTPharo;
+								versionString: #development;
+								repository: 'http://smalltalkhub.com/mc/Moose/FASTPharo/main/' ].
+			spec
+				package: 'FAST-Refactoring-Tests-Data';
+				package: 'FAST-Displaying';
+				package: 'FAST-Refactoring' with: [ spec requires: #('FAST-Displaying') ];
+				package: 'FAST-Refactoring-Tests'
+					with: [ spec requires: #('FAST-Refactoring-Tests-Data' 'FAST-Refactoring' 'FASTJava' 'FASTPharo') ].
+			spec
+				group: 'default' with: #('Core');
+				group: 'Core' with: #('FAST-Displaying' 'FAST-Refactoring');
+				group: 'Tests' with: #('FAST-Refactoring-Tests' 'FAST-Refactoring-Tests-Data') ]
+]
+
+{ #category : #baselines }
+ConfigurationOfFASTRefactoring >> baseline04: spec [
+	<version: '0.4-baseline'>
+
+	spec for: #'common' do: [
+		spec blessing: #'baseline'.
+		spec repository: 'http://smalltalkhub.com/mc/VincentBlondeau/FAST-Refactoring/main/'.
+		spec 
+			project: 'FASTJava' with: [
+				spec
+					className: #ConfigurationOfFASTJava;
+					versionString: #'development';
+					repository: 'http://smalltalkhub.com/mc/Moose/FASTJava/main/' ];
+			project: 'FASTPharo' with: [
+				spec
+					className: #ConfigurationOfFASTPharo;
+					versionString: #'development';
+					repository: 'http://smalltalkhub.com/mc/Moose/FASTPharo/main/' ];
+			project: 'FASTCore' with: [
+				spec
+					className: #ConfigurationOfFASTCore;
+					versionString: #'development';
+					repository: 'http://smalltalkhub.com/mc/Moose/FASTCore/main/' ].
+		spec 
+			package: 'FAST-Refactoring-Tests-Data';
+			package: 'FAST-Displaying';
+			package: 'FAST-Refactoring' with: [
+				spec requires: #('FAST-Displaying' 'FASTCore' ). ];
+			package: 'FAST-Refactoring-Tests' with: [
+				spec requires: #('FAST-Refactoring-Tests-Data' 'FAST-Refactoring' 'FASTJava' 'FASTPharo' ). ].
+		spec 
+			group: 'default' with: #('Core' );
+			group: 'Core' with: #('FAST-Displaying' 'FAST-Refactoring' );
+			group: 'Tests' with: #('FAST-Refactoring-Tests' 'FAST-Refactoring-Tests-Data' ). ].
+
+]
+
 { #category : #accessing }
 ConfigurationOfFASTRefactoring >> customProjectAttributes [
 	 "Edit to return a collection of any custom attributes e.g. for conditional loading: Array with: #'Condition1' with: #'Condition2.
 	For more information see: http://code.google.com/p/metacello/wiki/CustomProjectAttrributes"
 
-	^ #().
+	^ #().  
 ]
 
 { #category : #'symbolic versions' }
 ConfigurationOfFASTRefactoring >> development: spec [
 	<symbolicVersion: #'development'>
 
-	spec for: #'common' version: '0.1-baseline'.
+	spec for: #'common' version: '0.4-baseline'.
 
 ]
 
@@ -161,4 +258,92 @@ ConfigurationOfFASTRefactoring >> project [
 		(Smalltalk at: #MetacelloVersionConstructor) on: self project: project.
 		project loadType: #linear. "change to #atomic if desired"
 		project ]
+]
+
+{ #category : #'symbolic versions' }
+ConfigurationOfFASTRefactoring >> stable: spec [
+	<symbolicVersion: #'stable'>
+
+	spec for: #'common' version: '0.3'.
+
+]
+
+{ #category : #versions }
+ConfigurationOfFASTRefactoring >> version01: spec [
+	<version: '0.1' imports: #('0.1-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.1'.
+		spec author: 'VincentBlondeau'.
+		spec timestamp: '2/18/2014 16:23'.
+		spec 
+			project: 'FASTJava' with: #'stable';
+			project: 'FASTPharo' with: #'stable'.
+		spec 
+			package: 'FAST-Refactoring-Tests-Data' with: 'FAST-Refactoring-Tests-Data-VincentBlondeau.7';
+			package: 'FAST-Displaying' with: 'FAST-Displaying-VincentBlondeau.10';
+			package: 'FAST-Refactoring' with: 'FAST-Refactoring-VincentBlondeau.26'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfFASTRefactoring >> version02: spec [
+	<version: '0.2' imports: #('0.2-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.2'.
+		spec author: 'VincentBlondeau'.
+		spec timestamp: '3/18/2014 11:05'.
+		spec 
+			project: 'FASTJava' with: #'stable';
+			project: 'FASTPharo' with: #'stable'.
+		spec 
+			package: 'FAST-Refactoring-Tests-Data' with: 'FAST-Refactoring-Tests-Data-VincentBlondeau.10';
+			package: 'FAST-Displaying' with: 'FAST-Displaying-VincentBlondeau.13';
+			package: 'FAST-Refactoring' with: 'FAST-Refactoring-VincentBlondeau.37';
+			package: 'FAST-Refactoring-Tests' with: 'FAST-Refactoring-Tests-VincentBlondeau.8'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfFASTRefactoring >> version03: spec [
+	<version: '0.3' imports: #('0.3-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.3'.
+		spec author: 'VincentBlondeau'.
+		spec timestamp: '8/17/2015 15:37'.
+		spec 
+			project: 'FASTJava' with: '1.0-baseline';
+			project: 'FASTPharo' with: '1.0-baseline'.
+		spec 
+			package: 'FAST-Refactoring-Tests-Data' with: 'FAST-Refactoring-Tests-Data-VincentBlondeau.10';
+			package: 'FAST-Displaying' with: 'FAST-Displaying-VincentBlondeau.14';
+			package: 'FAST-Refactoring' with: 'FAST-Refactoring-VincentBlondeau.38';
+			package: 'FAST-Refactoring-Tests' with: 'FAST-Refactoring-Tests-VincentBlondeau.9'. ].
+
+]
+
+{ #category : #versions }
+ConfigurationOfFASTRefactoring >> version04: spec [
+	<version: '0.4' imports: #('0.4-baseline' )>
+
+	spec for: #'common' do: [
+		spec blessing: #'stable'.
+		spec description: 'version 0.4 - Valid with Moose 6.1'.
+		spec author: 'CYrilFerlicot'.
+		spec timestamp: '3/13/2017 11:37'.
+		spec 
+			project: 'FASTJava' with: '1.0-baseline';
+			project: 'FASTPharo' with: '1.0-baseline';
+			project: 'FASTCore' with: '0.5'.
+		spec 
+			package: 'FAST-Refactoring-Tests-Data' with: 'FAST-Refactoring-Tests-Data-VincentBlondeau.10';
+			package: 'FAST-Displaying' with: 'FAST-Displaying-VincentBlondeau.14';
+			package: 'FAST-Refactoring' with: 'FAST-Refactoring-CyrilFerlicot.40';
+			package: 'FAST-Refactoring-Tests' with: 'FAST-Refactoring-Tests-VincentBlondeau.9'. ].
+
 ]
